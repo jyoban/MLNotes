@@ -1077,6 +1077,28 @@ Hence we can minimize the approximation of $f(w)$. However, the approximation mi
 Solving the preceding by taking the derivative with respect to $w$ and comparing it to zero yields the update rule
 \[ w^{(t+1)} = w^{t} - \eta \nabla f(w^{t}) \]
 
+\chapter{Neural network}
+\begin{itemize}
+\item Epochs - One Epoch is when an ENTIRE dataset is passed forward and backward through the neural network only ONCE. Since, one epoch is too big to feed to the computer at once we divide it in several smaller batches.
+\item Batch Size - Total number of training examples present in a single batch.
+\item Iterations - Iterations is the number of batches needed to complete one epoch.
+\end{itemize}
+Let's say we have 2000 training examples that we are going to use. We can divide the dataset of 2000 examples into batches of 500 then it will take 4 iterations to complete 1 epoch.
+
+\begin{itemize}
+\item Stochastic Gradient Descent - Often abbreviated SGD, is a variation of the gradient descent algorithm that calculates the error and updates the model for each example in the training dataset.
+
+The update of the model for each training example means that stochastic gradient descent is often called an online machine learning algorithm.
+\item Batch gradient descent - It is a variation of the gradient descent algorithm that calculates the error for each example in the training dataset, but only updates the model after all training examples have been evaluated.
+
+One cycle through the entire training dataset is called a training epoch. Therefore, it is often said that batch gradient descent performs model updates at the end of each training epoch.
+\item Mini-batch gradient descent - It is a variation of the gradient descent algorithm that splits the training dataset into small batches that are used to calculate model error and update model coefficients.
+
+Implementations may choose to sum the gradient over the mini-batch or take the average of the gradient which further reduces the variance of the gradient.
+
+Mini-batch gradient descent seeks to find a balance between the robustness of stochastic gradient descent and the efficiency of batch gradient descent. It is the most common implementation of gradient descent used in the field of deep learning.
+\end{itemize}
+
 \chapter{Convolutional neural network}
 Neural network equations:
 \begin{align*}

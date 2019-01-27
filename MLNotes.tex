@@ -1807,7 +1807,7 @@ p(\theta \mid \alpha, \mathbf{w}) &\propto p(\mathbf{w} \mid \theta) p(\theta \m
 
 \section{Expectation maximization}
 
-\subsection{GMM}
+\subsection{Gaussian mixture model}
 \begin{align*}
 p(x | \theta) &= \pi_1 \, \mathcal{N}(x\mid \mu_1 ,\Sigma_1) + \pi_2 \, \mathcal{N}(x\mid \mu_2 ,\Sigma_2) + \pi_3 \, \mathcal{N}(x\mid \mu_3 ,\Sigma_3) \\
 \theta &= \{ \pi_1, \pi_2, \pi_3, \mu_1, \mu_2, \mu_3, \Sigma_1, \Sigma_2, \Sigma_3 \}
@@ -1848,6 +1848,12 @@ From Bayes theorem
 \begin{align*}
 p(t=c | x, \theta) &= \frac{p(x | t=c, \theta) p(t=c | \theta)}{Z}
 \end{align*}
+
+EM Algorithm
+\begin{itemize}
+\item Start with randomly placed parameters $\theta = \{ \pi_1, \dots, \mu_1, \dots, \Sigma_1, \dots \}$
+\item 
+\end{itemize}
 
 \section{Variational inference vs.\ expectation maximization}
 The difference lies mainly in that EM algorithm is a generic maximization algorithm that can be used for both frequentist inference and Bayesian inference. However, in contrast to the EM algorithm which only gives you a point estimate, it is always better for Bayesians if, hopefully, the whole posterior distribution is available. This is different from just obtaining one point estimate because then, you donot have any measure of uncertainty that your estimate conveys with it. This is where the variational Bayes (or variational inference, variational approximations) kicks in.

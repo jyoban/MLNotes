@@ -1852,7 +1852,11 @@ p(t=c | x, \theta) &= \frac{p(x | t=c, \theta) p(t=c | \theta)}{Z}
 EM Algorithm
 \begin{itemize}
 \item Start with randomly placed parameters $\theta = \{ \pi_1, \dots, \mu_1, \dots, \Sigma_1, \dots \}$
-\item 
+\item Until convergence repeat:
+\begin{enumerate}
+\item For each point $x_i$ calculate $p(t=c | x_i, \theta)$.
+\item Update parameters $\theta$ to fit points assigned to them.
+\end{enumerate}
 \end{itemize}
 
 \section{Variational inference vs.\ expectation maximization}

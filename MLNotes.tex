@@ -1844,6 +1844,11 @@ p(x | t=c, \theta) &= \mathcal{N}(x\mid \mu_c ,\sigma^{2}_{c}) \\
 \sigma^{2}_{c} &= \frac{\sum_i p(t_i = c | x_i, \theta) (x_i - \mu_c)^2}{\sum_i p(t_i = c | x_i, \theta)}
 \end{align*}
 
+From Bayes theorem
+\begin{align*}
+p(t=c | x, \theta) &= \frac{p(x | t=c, \theta) p(t=c | \theta)}{Z}
+\end{align*}
+
 \section{Variational inference vs.\ expectation maximization}
 The difference lies mainly in that EM algorithm is a generic maximization algorithm that can be used for both frequentist inference and Bayesian inference. However, in contrast to the EM algorithm which only gives you a point estimate, it is always better for Bayesians if, hopefully, the whole posterior distribution is available. This is different from just obtaining one point estimate because then, you donot have any measure of uncertainty that your estimate conveys with it. This is where the variational Bayes (or variational inference, variational approximations) kicks in.
 

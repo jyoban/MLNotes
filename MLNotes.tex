@@ -1840,8 +1840,9 @@ p(x | \theta) &= \sum_{c=1}^{N} p(x | t=c, \theta)p(t=c | \theta)
 Parameter estimation
 \begin{align*}
 p(x | t=c, \theta) &= \mathcal{N}(x\mid \mu_c ,\sigma^{2}_{c}) \\
-\mu_c  &= \frac{\sum_i p(t_i = c | x_i, \theta) x_i}{\sum_i p(t_i = c | x_i, \theta)} \\
-\sigma^{2}_{c} &= \frac{\sum_i p(t_i = c | x_i, \theta) (x_i - \mu_c)^2}{\sum_i p(t_i = c | x_i, \theta)}
+\mu_c  &= \frac{\sum_{i}^{N} p(t_i = c | x_i, \theta) x_i}{\sum_{i}^{N} p(t_i = c | x_i, \theta)} \\
+\sigma^{2}_{c} &= \frac{\sum_{i}^{N} p(t_i = c | x_i, \theta) (x_i - \mu_c)^2}{\sum_{i}^{N} p(t_i = c | x_i, \theta)} \\
+\pi_c &= \sum_{i}^{N} \frac{ p(t_i = c | x_i, \theta)}{N}
 \end{align*}
 
 From Bayes theorem
@@ -1855,7 +1856,7 @@ EM Algorithm
 \item Until convergence repeat:
 \begin{enumerate}
 \item For each point $x_i$ calculate $p(t=c | x_i, \theta)$.
-\item Update parameters $\theta$ to fit points assigned to them.
+\item Update parameters $\theta = \{ \pi_1, \dots, \mu_1, \dots, \Sigma_1, \dots \}$ to fit points assigned to them.
 \end{enumerate}
 \end{itemize}
 

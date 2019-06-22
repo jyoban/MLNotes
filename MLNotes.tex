@@ -1875,6 +1875,11 @@ p(\mathbf{x};\theta)=\int p(\mathbf{x},\mathbf{z};\theta)\dd{z}
 \end{equation}
 However, the above integration is, in many cases, intractable and can be either approximated using stochastic sampling (Monte Carlo methods) or we can simply bypass the computation using few assumptions. The second method is called variational inference, coined after the calculus of variations, which we will go over.
 
+\subsection{Evidence Lower Bound (ELBO)}
+
+There are many great tutorials for variational inference, but I found the tutorial by Tzikas et al.\ to be the most helpful. It follows the steps of Bishop et al.\ and Neal et al.\ and starts the introduction by formulating the inference as the Expectation Maximization. Here, we will summarize the steps in Tzikas et al.\ and elaborate some steps missing in the paper. Let $q(z)$
+be a probability distribution on $z$. Then,
+%~\cite{TzikasIEEEsignalprocessingmagazine2008}
 \section{Variational inference vs.\ expectation maximization}
 The difference lies mainly in that EM algorithm is a generic maximization algorithm that can be used for both frequentist inference and Bayesian inference. However, in contrast to the EM algorithm which only gives you a point estimate, it is always better for Bayesians if, hopefully, the whole posterior distribution is available. This is different from just obtaining one point estimate because then, you donot have any measure of uncertainty that your estimate conveys with it. This is where the variational Bayes (or variational inference, variational approximations) kicks in.
 

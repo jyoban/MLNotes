@@ -32,8 +32,9 @@
  \let\@texttop\relax
 \makeatother
 
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\newcommand{\dd}[1]{\mathrm{d}#1}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
@@ -1859,6 +1860,20 @@ EM Algorithm
 \item Update parameters $\theta = \{ \pi_1, \dots, \mu_1, \dots, \Sigma_1, \dots \}$ to fit points assigned to them.
 \end{enumerate}
 \end{itemize}
+
+\section{Expectation Maximization}
+
+Statistical inference involves finding the right model and parameters that represent the distribution of observations well. Let $\mathbf{x}$ be the observations and $\theta$ be the unknown parameters of a ML model. In maximum likelihood estimation, we try to find the $\theta_\mathrm{ML}$
+that maximizes the probability of the observations using the ML model with the parameters:
+\begin{equation}
+\hat{\theta}_\mathrm{ML} = \argmax_\theta \, p(\mathbf{x}, \theta)
+\end{equation}
+Typically, the problem requires few assumptions to solve the above optimization efficiently. One trick is to introduce latent variables $\mathbf{z}$ that break down the problem into smaller subproblems. For instance, in the Gaussian Mixture Model, we can introduce the cluster membership assignment as random variables $z_i$ for each datum $x_i$, which greatly simplifies the model
+$(p(x_i|z_i=k) \sim \mathcal{N}(\mu_k,\sigma_k))$.
+\begin{equation}
+p(\mathbf{x};\theta)=\int p(\mathbf{x},\mathbf{z};\theta)\dd{z}
+\end{equation}
+However, the above integration is, in many cases, intractable and can be either approximated using stochastic sampling (Monte Carlo methods) or we can simply bypass the computation using few assumptions. The second method is called variational inference, coined after the calculus of variations, which we will go over.
 
 \section{Variational inference vs.\ expectation maximization}
 The difference lies mainly in that EM algorithm is a generic maximization algorithm that can be used for both frequentist inference and Bayesian inference. However, in contrast to the EM algorithm which only gives you a point estimate, it is always better for Bayesians if, hopefully, the whole posterior distribution is available. This is different from just obtaining one point estimate because then, you donot have any measure of uncertainty that your estimate conveys with it. This is where the variational Bayes (or variational inference, variational approximations) kicks in.

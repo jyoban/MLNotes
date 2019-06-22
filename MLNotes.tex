@@ -13,6 +13,7 @@
 \usepackage{multirow}
 \usepackage{listings}
 \usepackage{algorithm, algorithmic}
+\usepackage{hyperref}
 
 \usepackage{tikz}
 \tikzset{
@@ -1863,7 +1864,7 @@ EM Algorithm
 
 \section{Expectation Maximization}
 
-Statistical inference involves finding the right model and parameters that represent the distribution of observations well. Let $\mathbf{x}$ be the observations and $\theta$ be the unknown parameters of a ML model. In maximum likelihood estimation, we try to find the $\theta_\mathrm{ML}$
+\href{https://chrischoy.github.io/research/Expectation-Maximization-and-Variational-Inference/}{Statistical inference} involves finding the right model and parameters that represent the distribution of observations well. Let $\mathbf{x}$ be the observations and $\theta$ be the unknown parameters of a ML model. In maximum likelihood estimation, we try to find the $\theta_\mathrm{ML}$
 that maximizes the probability of the observations using the ML model with the parameters:
 \begin{equation}
 \hat{\theta}_\mathrm{ML} = \argmax_\theta \, p(\mathbf{x}, \theta)
@@ -1877,9 +1878,9 @@ However, the above integration is, in many cases, intractable and can be either 
 
 \subsection{Evidence Lower Bound (ELBO)}
 
-There are many great tutorials for variational inference, but I found the tutorial by Tzikas et al.\ to be the most helpful. It follows the steps of Bishop et al.\ and Neal et al.\ and starts the introduction by formulating the inference as the Expectation Maximization. Here, we will summarize the steps in Tzikas et al.\ and elaborate some steps missing in the paper. Let $q(z)$
+There are many great tutorials for variational inference, but I found the tutorial by Tzikas et al.\ \cite{4644060} to be the most helpful. It follows the steps of Bishop et al.\ \cite{Bishop:2006:PRM:1162264} and Neal et al.\ \cite{Neal:1999:VEA:308574.308679} and starts the introduction by formulating the inference as the Expectation Maximization. Here, we will summarize the steps in Tzikas et al.\ \cite{4644060} and elaborate some steps missing in the paper. Let $q(z)$
 be a probability distribution on $z$. Then,
-%~\cite{TzikasIEEEsignalprocessingmagazine2008}
+
 \section{Variational inference vs.\ expectation maximization}
 The difference lies mainly in that EM algorithm is a generic maximization algorithm that can be used for both frequentist inference and Bayesian inference. However, in contrast to the EM algorithm which only gives you a point estimate, it is always better for Bayesians if, hopefully, the whole posterior distribution is available. This is different from just obtaining one point estimate because then, you donot have any measure of uncertainty that your estimate conveys with it. This is where the variational Bayes (or variational inference, variational approximations) kicks in.
 
@@ -1904,6 +1905,6 @@ So EM and VB are not really distinguished as to how complex they are used for is
 
 \newpage
 \bibliographystyle{abbrv}
-\bibliography{ML} 
+\bibliography{MLNotes} 
 \end{document}
 

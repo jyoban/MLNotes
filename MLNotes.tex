@@ -1520,7 +1520,7 @@ P(\theta \vert X) &= \frac{P(\theta, X)}{P(X)} \\
 \textbf{Classification:}
 \begin{itemize}
 \item Training: 
-\[P(\theta \vert X_{\text{tr}}, y_{\text{tr}}) =  \frac{P(y_{\text{tr}} \vert X_{\text{tr}},\theta)P(\theta)}{P(P(y_{\text{tr}} \vert X_{\text{tr}})}\]
+\[P(\theta \vert X_{\text{tr}}, y_{\text{tr}}) =  \frac{P(y_{\text{tr}} \vert X_{\text{tr}},\theta)P(\theta)}{P(y_{\text{tr}} \vert X_{\text{tr}})}\]
 \item Prediction:
 \[P(y_{\text{ts}} \vert X_{\text{ts}}, X_{\text{tr}}, y_{\text{tr}}) = \int P(y_{\text{ts}} \vert X_{\text{ts}}, \theta) P(\theta \vert X_{\text{tr}}, y_{\text{tr}}) \, d\theta\]
 \end{itemize}

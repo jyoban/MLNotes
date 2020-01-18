@@ -1,0 +1,41 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\newcommand{\dd}[1]{\mathrm{d}#1}
+
+
+\title{Maximum likelihood estimation}
+\author{Jyotirmoy Banerjee}
+\begin{document}
+\maketitle
+\section{Introduction}
+
+\begin{itemize}
+\item Let's suppose we have observed 10 data points from some process. For example, each data point could represent the length of time in seconds that it takes a student to answer a specific exam question.
+\item We assume that they have been generated from a process that is adequately described by a Gaussian distribution. How do we calculate the maximum likelihood estimates of the parameter values of the Gaussian distribution $\mu$ and $\sigma$?
+\item Maximum likelihood estimation is a method that determines values for the parameters of a model. The parameter values are found such that they maximise the likelihood that the process described by the model produced the data that were actually observed.
+\item What we want to calculate is the total probability of observing all of the data, i.e.\ the joint probability distribution of all observed data points. To do this we would need to calculate some conditional probabilities, which can get very difficult. So it is here that we will make our first assumption. The assumption is that each data point is generated independently of the others. This assumption makes the maths much easier. 
+\item If the events (i.e.\ the process that generates the data) are independent, then the total probability of observing all of data is the product of observing each data point individually (i.e. the product of the marginal probabilities).
+\end{itemize}
+
+
+
+The probability density of observing a single data point x, that is generated from a Gaussian distribution is given by:
+\[
+P(x;\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}} \exp \left( -\frac{(x-\mu)^2}{2\sigma^2} \right)
+\]
+The semi colon used in the notation $P(x; \mu, \sigma)$ is there to emphasise that the symbols that appear after it are parameters of the probability distribution. So it should not be confused with a conditional probability (which is typically represented with a vertical line e.g.\ $P(A| B)$).
+
+
+The total (joint) probability density of observing n data points is given by:
+\[
+P(x_1,x_2,\cdots,x_n;\mu,\sigma) = \prod_{i=1}^{n} \frac{1}{\sigma\sqrt{2\pi}} \exp \left( -\frac{(x_i-\mu)^2}{2\sigma^2} \right)
+\]
+We just have to figure out the values of $\mu$ and $\sigma$ that results in giving the maximum value of the above expression. This expression can be differentiated to find the maximum.
+
+The above expression for the total probability is actually quite a pain to differentiate, so it is almost always simplified by taking the natural logarithm of the expression. This is absolutely fine because the natural logarithm is a monotonically increasing function. This means that if the value on the x-axis increases, the value on the y-axis also increases. This is important because it ensures that the maximum value of the log of the probability occurs at the same point as the original probability function. Therefore we can work with the simpler log-likelihood instead of the original likelihood.
+\end{document}

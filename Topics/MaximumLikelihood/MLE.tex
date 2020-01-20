@@ -37,5 +37,21 @@ P(x_1,x_2,\cdots,x_n;\mu,\sigma) = \prod_{i=1}^{n} \frac{1}{\sigma\sqrt{2\pi}} \
 \]
 We just have to figure out the values of $\mu$ and $\sigma$ that results in giving the maximum value of the above expression. This expression can be differentiated to find the maximum.
 
-The above expression for the total probability is actually quite a pain to differentiate, so it is almost always simplified by taking the natural logarithm of the expression. This is absolutely fine because the natural logarithm is a monotonically increasing function. This means that if the value on the x-axis increases, the value on the y-axis also increases. This is important because it ensures that the maximum value of the log of the probability occurs at the same point as the original probability function. Therefore we can work with the simpler log-likelihood instead of the original likelihood.
+The above expression for the total probability is difficult to differentiate, so it is almost always simplified by taking the natural logarithm of the expression. This is absolutely fine because the natural logarithm is a monotonically increasing function. This means that if the value on the x-axis increases, the value on the y-axis also increases. This is important because it ensures that the maximum value of the log of the probability occurs at the same point as the original probability function. Therefore we can work with the simpler log-likelihood instead of the original likelihood.
+
+\section{Maximum likelihood classifier}
+The maximum likelihood classifier is one of the most popular methods of classification, in which x with the maximum likelihood is classified into the corresponding class. The likelihood $L_k$ is defined as the posterior probability of a pixel belonging to class k.
+
+\[
+L_k = P(k|x) = \frac{P(x|k)P(k)}{P(x)} = \frac{P(x|k)P(k)}{\sum P(x|i)P(i)}
+\]
+where $P(k)$ is the probability of class k.
+
+Usually $P(k)$ are assumed to be equal to each other and $P(i)*P(x|i)$ is also common to all classes. Therefore $L_k$ depends on $P(x|k)$ or the probability density function.
+
+For mathematical reasons, a multivariate normal distribution is applied as the probability density function. In the case of normal distributions, the likelihood can be expressed as follows.
+
+\[
+L_k = \frac{1}{\sigma\sqrt{2\pi}} \exp \left( -\frac{(x_i-\mu)^2}{2\sigma^2} \right)
+\]
 \end{document}

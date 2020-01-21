@@ -39,7 +39,7 @@ We just have to figure out the values of $\mu$ and $\sigma$ that results in givi
 
 The above expression for the total probability is difficult to differentiate, so it is almost always simplified by taking the natural logarithm of the expression. This is absolutely fine because the natural logarithm is a monotonically increasing function. This means that if the value on the x-axis increases, the value on the y-axis also increases. This is important because it ensures that the maximum value of the log of the probability occurs at the same point as the original probability function. Therefore we can work with the simpler log-likelihood instead of the original likelihood.
 
-\section{Maximum likelihood classifier}
+\section{Bayes or Maximum likelihood classifier}
 The maximum likelihood classifier is one of the most popular methods of classification, in which x with the maximum likelihood is classified into the corresponding class. The likelihood $L_k$ is defined as the posterior probability of a pixel belonging to class k.
 
 \[
@@ -52,6 +52,23 @@ Usually $P(k)$ are assumed to be equal to each other and $P(i)*P(x|i)$ is also c
 For mathematical reasons, a multivariate normal distribution is applied as the probability density function. In the case of normal distributions, the likelihood can be expressed as follows.
 
 \[
-L_k = \frac{1}{\sigma\sqrt{2\pi}} \exp \left( -\frac{(x_i-\mu)^2}{2\sigma^2} \right)
+L_k = \frac{1}{\sigma\sqrt{2\pi}} \exp \left( -\frac{(x-\mu)^2}{2\sigma^2} \right)
 \]
+
+\section{Na\"{\i}ve Bayes:}
+The Na\"{\i}ve Bayes classifier is an approximation to the Bayes classifier, in which we assume that the features are conditionally independent given the class instead of modelling their full conditional distribution given the class.
+\begin{align*} 
+P(k|x_1,x_2,\cdots,x_n) &\propto  P(x_1,x_2,x_3,\cdots,x_n,k) \\ 
+&=  P(x_1|x_2,x_3,\cdots,x_n,k)P(x_2,x_3,\cdots,x_n,k) \\ 
+&= P(x_1|x_2,x_3,\cdots,x_n,k)P(x_2|x_3,\cdots,x_n,k)P(x_3,\cdots,x_n,k) \\
+&=  P(x_1|x_2,x_3,\cdots,x_n,k)P(x_2|x_3,\cdots,x_n,k) \cdots P(x_n|k)P(k) \\ 
+&=  P(k)P(x_1|k)P(x_2|k) \cdots P(x_n|k) \\
+&=  P(k)\prod_{i=1}^{n} P(x_i|k)
+\end{align*}
+
+\begin{align*} 
+P(k|x_1,x_2,\cdots,x_n) &= P(k)\prod_{i=1}^{n} P(x_i|k)
+\end{align*}
+
 \end{document}
+

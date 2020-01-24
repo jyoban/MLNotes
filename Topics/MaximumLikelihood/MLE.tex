@@ -12,7 +12,96 @@
 \author{Jyotirmoy Banerjee}
 \begin{document}
 \maketitle
+
 \section{Introduction}
+\textbf{Probability mass function:} 
+A discrete random variable is a random variable whose range is finite or countably infinite. The probability mass function of a discrete random variable $X$ is 
+\[ f_X(x) = P\{X=x\}\]
+The mass function has two basic properties:
+\begin{itemize}
+\item $f_X(x) \geq 0$ for all $x$ in the state space
+\item $\sum_x f_X(x) = 1$
+\end{itemize}
+
+\noindent
+\textbf{Probability density function:} Let $X$ be  a  random  variable  whose  cumulative distribution function $F_X$ has a derivative. The  function $f_X$ satisfying
+\[ F_X(x) = \int _{-\infty }^{x}f_{X}(t)\,dt \]
+is called the probability density function and $X$ is called a continuous random variable.
+By the fundamental theorem of calculus, ${F}'_X(x) = f_X(x)$. We can compute compute probabilities using
+\[P\{a < X \leq b\} = F_X(b) - F_X(a) = \int _{a}^{b}f_{X}(t)\,dt\] 
+
+\noindent
+\textbf{Independence:} $X$ and $Y$ are independent if:
+\begin{align*}
+P(X,Y) &= P(X)P(Y) \\
+\text{Joint} &= \text{Marginal} \times \text{Marginal}
+\end{align*}
+
+\noindent
+\textbf{Conditional probability:} Probability of $X$ given that $Y$ happened:
+\begin{align*}
+P(X \vert Y) &= \frac{P(X,Y)}{P(Y)} \\
+\text{Conditional} &= \frac{\text{Joint}}{\text{Marginal}}
+\end{align*}
+
+\noindent
+\textbf{Chain rule:} 
+\begin{align*}
+P(X,Y) &= P(X \vert Y)P(Y) \\
+P(X, Y, Z) &= P(X \vert Y, Z) P(Y \vert Z) P(Z) \\
+P(X_1,X_2,\dots,X_N) &= \prod_{i=1}^{N}P(X_i \vert X_1,X_2,\dots,X_{i-1})
+\end{align*}
+
+\noindent
+\textbf{Sum rule:} Marginalization
+\begin{align*}
+p(X) &= \int _{-\infty }^{\infty} p(X,Y) \, dY
+\end{align*} 
+
+\noindent
+\textbf{Bayes theorem}
+\begin{itemize}
+\item $\theta$ - Parameters
+\item $X$ - Observations
+\end{itemize}
+\begin{align*} 
+P(\theta \vert X) &= \frac{P(\theta, X)}{P(X)} \\
+&= \frac{P(X \vert \theta)P(\theta)}{P(X)} \\
+\text{Posterior} &= \frac{\text{Likelihood} \times \text{Prior}}{\text{Evidence}} \\
+& \propto \text{Likelihood} \times \text{Prior}
+\end{align*}
+
+\section{Likelihood}
+Given a statistical probability mass function or density, say $f(x,\theta)$, where $\theta$ is an unknown parameter, the \emph{likelihood} is $f$ viewed as a function of $\theta$ for a fixed, observed value of $x$ of the random variable $X$. The probability density function is the continuous analogue of probability mass function.
+
+Given the outcome $x$ of the random variable $X$, the likelihood function, which is a function of $\theta$, is given as:
+\begin{equation*}
+\mathcal{L}(\theta|x) = f_{\theta}(x) = P_{\theta}(X = x) = P(X = x \mid \theta) 
+\end{equation*} 
+
+For example -
+\begin{enumerate} \addtolength{\itemsep}{-0.5\baselineskip}
+\item Suppose we flip a coin with success probability of $\theta$
+\item Recall that the mass function for $x$
+\[ f(x, \theta) = {\theta}^x{(1-\theta)^{1-x}} \quad \mbox{for} \quad \theta \in [0, 1]\] 
+where $x$ is either 0 (tails) or 1 (heads)
+\item Suppose that the result is a head. The likelihood is 
+\[ \mathcal{L}(\theta|1) = {\theta}^1{(1-\theta)^{1-1}} = \theta \quad \mbox{for} \quad \theta \in [0, 1]\]
+\item Therefore, $\mathcal{L}(0.5|1)/\mathcal{L}(0.25|1) = 2$
+\item There is twice as much evidence supporting the hypothesis that $\theta = 0.5$ to the hypothesis that $\theta = 0.25$
+\end{enumerate}
+
+\section{Maximum likelihood and Maximum a posteriori}
+Maximum a posteriori (MAP) and maximum likelihood estimation (MLE) are stated as follows
+\begin{align*}
+\theta_{\mathcal{MAP}} &= \argmax_{\theta} P(\theta|x) \nonumber \\
+									&= \argmax_{\theta} P(x|\theta) P(\theta)  \nonumber \\
+\theta_{\mathcal{MLE}} &= \argmax_{\theta} P(x|\theta) \nonumber
+\end{align*}
+where $X$ is the input data and $\theta$ is the output parameter.
+
+
+\section{Maximum likelihood}
 
 \begin{itemize}
 \item Let's suppose we have observed 10 data points from some process. For example, each data point could represent the length of time in seconds that it takes a student to answer a specific exam question.
@@ -70,5 +159,13 @@ P(k|x_1,x_2,\cdots,x_n) &\propto  P(x_1,x_2,x_3,\cdots,x_n,k) \\
 P(k|x_1,x_2,\cdots,x_n) &= P(k)\prod_{i=1}^{n} P(x_i|k)
 \end{align*}
 
+\section{Maximum likelihood regression}
+The distribution of $X$ is arbitrary. If $X=x$, then $Y=\beta_0+\beta_1 x+\epsilon$, for some parameters $\beta_0$ and $\beta_1$, and some random noise variable $\epsilon$. The noise is independent of $X$.
+
+Because of these stronger assumptions, the model tells us the conditional pdf of $Y$ for each $x$, $p(y|X=x;\beta_0,\beta_1,\sigma)$. Given any data set $(x_1,y_1),(x_2,y_2),\cdots (x_n,y_n)$, we can now write down the probability density, under the model, of seeing that data:
+\[
+\prod_{i=1}^n p(y|x_i;\beta_0,\beta_1,\sigma) = \prod_{i=1}^n \frac{1}{\sigma\sqrt{2\pi}}  \exp \left( -\frac{(y_i-(\beta_0+\beta_1 x_i+\epsilon))^2}{2\sigma^2} \right)
+\]
+In multiplying together the probabilities like this, we are using the independence of the $Y_i$.
 \end{document}
 

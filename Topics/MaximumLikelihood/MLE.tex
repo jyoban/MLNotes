@@ -98,7 +98,7 @@ Maximum a posteriori (MAP) and maximum likelihood estimation (MLE) are stated as
 									&= \argmax_{\theta} P(x|\theta) P(\theta)  \nonumber \\
 \theta_{\mathcal{MLE}} &= \argmax_{\theta} P(x|\theta) \nonumber
 \end{align*}
-where $X$ is the input data and $\theta$ is the output parameter.
+where $x$ is the input data and $\theta$ is the output parameter. $\mathcal{L}_\theta = P(x|\theta)$.
 
 
 \section{Maximum likelihood}
@@ -178,5 +178,15 @@ Because of these stronger assumptions, the model tells us the conditional pdf of
 \prod_{i=1}^n p(y_i|x_i;\beta_0,\beta_1,\sigma) = \prod_{i=1}^n \frac{1}{\sigma\sqrt{2\pi}}  \exp \left( -\frac{(y_i-(\beta_0+\beta_1 x_i+\epsilon))^2}{2\sigma^2} \right)
 \]
 In multiplying together the probabilities like this, we are using the independence of the $Y_i$. This is the likelihood function. In the method of maximum likelihood, we p[ck the parameter values which  maximize  the  likelihood,  or,  equivalently,  maximize  the  log-likelihood.
+
+\section{Logistic regression using maximum likelihood formulation}
+Some definitions:
+Odds = $\frac{p}{1-p}$, logit = log odds
+
+In a sequence of Bernoulli trials $y_i, \cdots, y_n$, with a constant probability of success, the likelihood is,
+\[
+\prod_{i=1}^{n} p^{y_i} (1-p^{y_i})
+\]
+
 \end{document}
 

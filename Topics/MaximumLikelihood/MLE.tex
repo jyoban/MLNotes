@@ -183,9 +183,9 @@ In multiplying together the probabilities like this, we are using the independen
 Some definitions:
 Odds = $\frac{p}{1-p}$, logit = log odds
 
-In a sequence of Bernoulli trials $y_i, \cdots, y_n$, with a constant probability of success, the likelihood is,
+Assume that $Pr(Y=1|X=x)=p(x;θ)$, for some function parametrized by $\theta$. Further assume that observations are independent of each other. Then the (conditional) likelihood function is:
 \[
-\prod_{i=1}^{n} p^{y_i} (1-p^{y_i})
+\prod_{i=1}^{n} Pr(Y=y_i|X=x_i) = \prod_{i=1}^{n} p(x_i;\theta)^y_i (1-p(x_i;\theta)^{1-y_i}) 
 \]
 
 \end{document}

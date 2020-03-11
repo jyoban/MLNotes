@@ -176,10 +176,10 @@ If a given class and feature value never occur together in the training data, th
 
 
 \subsection{Variants of Multinomial Na\"{\i}ve Bayes}
-Let $tf_{(x_i,d)}$ be the term frequency of $x_i$ in document $d$. Then $P(k|d)$ is computed as follows:
+Let $\mbox{tf}_{(x_i,d)}$ be the term frequency of $x_i$ in document $d$. Then $P(k|d)$ is computed as follows:
 \begin{align*} 
 P(k|d) &= P(k|x_1,x_2,\cdots,x_n) \\
- &= P(k)\prod_{i=1}^{n} P(x_i|k)^{tf_{(x_i,d)}}
+ &= P(k)\prod_{i=1}^{n} P(x_i|k)^{\mbox{tf}_{(x_i,d)}}
 \end{align*}
 
 

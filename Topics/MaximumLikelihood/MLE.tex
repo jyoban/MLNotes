@@ -165,13 +165,13 @@ P(k|d) &= P(k|x_1,x_2,\cdots,x_n) \\
 For the prior the estimate is $P(k) = \frac{N_k}{N}$, where $N_k$ is the number of documents in class $k$ and $N$ is the total number of documents. 
 
 The conditional probability $P(x_i|k)$ is estimated as the relative frequency of term $x_i$ in documents belonging to class $k$:
-\[P(x_i|k) = \frac{T_{ki}}{\sum_{i \in V} T_{ki}}\]
+\[P(x_i|k) = \frac{T_{kx_i}}{\sum_{x_{i'} \in V} T_{kx_{i'}}}\]
 where $T_{ki}$ is the number of occurrence of $x_i$ in training documents from class $k$, including multiple occurrences of a term in a document. $V$ is the vocabulary. 
 
 \subsection{Laplace smoothing}
 If a given class and feature value never occur together in the training data, then the frequency-based probability estimate will be zero, because the probability estimate is directly proportional to the number of occurrences of a feature's value. This is problematic because it will wipe out all information in the other probabilities when they are multiplied. Therefore, it is often desirable to incorporate a small-sample correction, called pseudocount, in all probability estimates such that no probability is ever set to be exactly zero. This way of regularizing na\"{\i}ve Bayes is called Laplace smoothing when the pseudocount is one, and Lidstone smoothing in the general case. Laplace smoothing is given as:
 
-\[P(x_i|k) = \frac{T_{ki}+1}{\sum_{i \in V} (T_{ki}+1)}\]
+\[P(x_i|k) = \frac{T_{ki}+1}{\sum_{x_{i'} \in V} (T_{kx_{i'}}+1)}\]
 
 
 

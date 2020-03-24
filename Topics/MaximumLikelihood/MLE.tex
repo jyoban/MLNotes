@@ -230,9 +230,9 @@ L( {\hat{\beta}_0, \hat{\beta}_1} ) = \prod_{i=1}^{n} p(x_i;\theta)^{y_i} (1-p(x
 The estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ are chosen to maximize this likelihood function.
 
 \subsection{Newton's Method for Numerical Optimization}
-There are a huge number of methods for numerical optimization; one of the most ancient yet important of them is Newton's method (alias "Newton-Raphson").
+There are a number of methods for numerical optimization; one of the most ancient yet important of them is Newton's method (alias ``Newton-Raphson").
 
-Consider the simplest case of minimizing a function of one scalar variable,say $f(\beta)$. We want to find the location of the global minimum, $\beta^*$. We suppose that $f$ is smooth, and that $\beta^*$ is a regular interior minimum, meaning that the derivative at $\beta^*$ is zero and the second derivative is positive. Near the minimum we could make a Taylor expansion:
+Consider the simplest case of minimizing a function of one scalar variable, say $f(\beta)$. We want to find the location of the global minimum, $\beta^*$. We suppose that $f$ is smooth, and that $\beta^*$ is a regular interior minimum, meaning that the derivative at $\beta^*$ is zero and the second derivative is positive. Near the minimum we could make a Taylor expansion:
 \[
 f(\beta) \approx f(\beta^*) + \frac{1}{2} (\beta - \beta^*)^2 \frac{d^2f}{d\beta^2} \Bigr|_{\beta = \beta^*}
 \]
@@ -248,13 +248,13 @@ Now it is easy to minimize the right-hand side of equation. We just take the der
 
 \begin{align*}
 0 & = f'(\beta^0) + (\beta^1 - \beta^0)f''(\beta^0) \\
-\beta^1 & = \beta^0 \frac{f'(\beta^0)}{f''(\beta^0)}
+\beta^1 & = \beta^0 - \frac{f'(\beta^0)}{f''(\beta^0)}
 \end{align*}
 
 The value $\beta^1$ should be a better guess at the minimum $\beta^∗$ than the initial one $\beta^0$ was. So if we use it to make a quadratic approximation to $f$, we will get a better approximation, and so we can iterate this procedure, minimizing one approximation and then using that to get a new approximation:
 
 \[
-\beta^{(n+1)} = \beta^{(n)} \frac{f'(\beta^{(n)})}{f''(\beta^{(n)})}
+\beta^{(n+1)} = \beta^{(n)} - \frac{f'(\beta^{(n)})}{f''(\beta^{(n)})}
 \]
 
 

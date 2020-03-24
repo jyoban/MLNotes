@@ -195,13 +195,39 @@ Because of these stronger assumptions, the model tells us the conditional pdf of
 In multiplying together the probabilities like this, we are using the independence of the $Y_i$. This is the likelihood function. In the method of maximum likelihood, we pick the parameter values which  maximize  the  likelihood,  or,  equivalently,  maximize  the  log-likelihood.
 
 \section{Logistic regression using maximum likelihood formulation}
-Some definitions:
-Odds = $\frac{p}{1-p}$, logit = log odds
-
 Assume that $P(Y=1|X=x)=p(x;\theta)$, for some function parametrized by $\theta$. Further assume that observations are independent of each other. Then the (conditional) likelihood function is:
 \[
-\prod_{i=1}^{n} Pr(Y=y_i|X=x_i) = \prod_{i=1}^{n} p(x_i;\theta)^{y_i} (1-p(x_i;\theta)^{1-y_i}) 
+\prod_{i=1}^{n} P(Y=y_i|X=x_i) = \prod_{i=1}^{n} p(x_i;\theta)^{y_i} (1-p(x_i;\theta)^{1-y_i}) 
 \]
+
+\subsection{logistic function}
+In logistic regression, we use the logistic function:
+\[
+p(X) = \frac{\exp ({\beta_0 + \beta_1 X})}{1 + \exp ({\beta_0 + \beta_1 X})}
+\]
+
+\subsection{odds}
+After a bit of manipulation of, we find that:
+\[
+\frac{p(X)}{1 - p(X)} = \exp ({\beta_0 + \beta_1 X})
+\]
+The quantity $p(X)/[1−p(X)]$ is called the odds, and can take on any value
+between $0$ and $\inf$. Values of the odds close to $0$ and $\inf$ indicate very low
+and very high probabilities of default, respectively. 
+
+\subsection{log-odds or logit}
+By taking the logarithm of both sides of, we arrive at:
+\[
+\log \left( \frac{p(X)}{1 - p(X)} \right) = {\beta_0 + \beta_1 X}
+\]
+The left-hand side is called the log-odds or logit. We see that the logistic regression model has a logit that is linear in X.
+
+\subsection{likelihood}
+The likelihood function is then:
+\[
+L( {\hat{\beta}_0, \hat{\beta}_1 X} ) = \prod_{i=1}^{n} p(x_i;\theta)^{y_i} (1-p(x_i;\theta)^{1-y_i}) 
+\]
+The estimates $\hat{\beta}_0$ and $\hat{\beta}_1$ are chosen to maximize this likelihood function.
 
 \end{document}
 

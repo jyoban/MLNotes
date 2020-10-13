@@ -1,0 +1,39 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\newcommand{\dd}[1]{\mathrm{d}#1}
+
+
+\title{Gradient descent optimization}
+\author{Jyotirmoy Banerjee}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Gradient descent is the preferred way to optimize neural networks and many other machine learning algorithms but is often used as a black box. Here we explore how many of the most popular gradient-based optimization algorithms such as Momentum, Adagrad, and Adam actually work.
+
+
+Gradient descent is a way to minimize an objective function $J(\theta)$ parameterized by a model's parameters $\theta \in \mathbb{R}^d$ by updating the parameters in the opposite direction of the gradient of the objective function $\nabla_\theta J(\theta)$ w.r.t. to the parameters. The learning rate $\eta$ determines the size of the steps we take to reach a (local) minimum. In other words, we follow the direction of the slope of the surface created by the objective function downhill until we reach a valley.
+
+\section{Gradient descent variants}
+
+\subsection{Batch gradient descent}
+Vanilla gradient descent, aka batch gradient descent, computes the gradient of the cost function w.r.t. to the parameters $\theta$ for the entire training dataset:
+\[\theta = \theta - \eta \cdot \nabla_\theta J( \theta)\]
+
+\subsection{Stochastic gradient descent}
+Stochastic gradient descent (SGD) in contrast performs a parameter update for each training example $x^{(i)}$ and label $y^{(i)}$:
+\[\theta = \theta - \eta \cdot \nabla_\theta J( \theta; x^{(i)}; y^{(i)})\]
+
+\subsection{Mini-batch gradient descent}
+Mini-batch gradient descent finally takes the best of both worlds and performs an update for every mini-batch of $n$ training examples:
+\[\theta = \theta - \eta \cdot \nabla_\theta J( \theta; x^{(i:i+n)}; y^{(i:i+n)})\]
+
+
+\end{document}
+

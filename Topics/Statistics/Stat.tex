@@ -24,14 +24,30 @@ So, when the p-value is low enough, we reject the null hypothesis and conclude t
 \textbf{Alpha level:}
 It is the cutoff probability for p-value to establish statistical significance for a given hypothesis test.
 For an observed effect to be considered as statistically significant, the p-value of the test should be lower than the pre-decided alpha value.
-Typically for most statistical tests, alpha is set as 0.05.
+
+Typically for most statistical tests, alpha is set as 0.05. 
+What happens if it is say, 0.051? It is still considered as not significant. We do not call it as a weak statistical significant. It is either black or white. There is no gray with respect to statistical significance.
+As a thumb rule, alpha is never set greater than 0.1. When the occurrence of the event is rare, we set a very low alpha. The rarer it is, the lower the alpha.
 
 \textbf{Example:}
+\vspace{-\topsep}
 \begin{itemize}
 \itemsep0em
 \item Null Hypothesis (H0): The slope of the line of best fit (a.k.a beta coefficient) is zero.
 \item Alternate Hypothesis (HA): The beta coefficient is not zero.
 \end{itemize}
+\vspace{-\topsep}
+
+\section{Statistical Significance in A/B testing}
+To make sure that we do not evaluate an experiment based on random results, we estimate the statistical significance - which is calculated by using the p-value.
+P-value is created to show the exact probability that the outcome of the A/B test is a result of chance.
+\vspace{-\topsep}
+\begin{itemize} 
+\itemsep0em
+\item If the p-value is low ($<1\%$) then we can say that version B is indeed better than version A.
+\item If the p-value is high ($>=1\%$) then our result could have happened randomly.
+\end{itemize}
+\vspace{-\topsep}
 
 \end{document}
 

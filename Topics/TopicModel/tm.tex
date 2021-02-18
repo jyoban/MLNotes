@@ -111,9 +111,52 @@ p(\theta \mid \alpha, \mathbf{w}) &\propto p(\mathbf{w} \mid \theta) p(\theta \m
 \end{align*}
 
 \section{Topic model}
-\begin{figure}[hbt!]
-\centering
- \includegraphics[width=0.7\linewidth]{figures/tmpd.png}
+%\begin{figure}[hbt!]
+%\centering
+% \includegraphics[width=0.7\linewidth]{figures/tmpd.png}
+%\end{figure}
+
+\begin{figure}[htp!]
+  \centering
+  \begin{tikzpicture}
+    [
+      observed/.style={minimum size=15pt,circle,draw=blue!50,fill=blue!20},
+      unobserved/.style={minimum size=15pt,circle,draw},
+      hyper/.style={minimum size=1pt,circle,fill=black},
+      post/.style={->,>=stealth',semithick},
+    ]
+
+    \node (w-j) [observed] at (0,0) {$w$};
+    \node (z-j) [unobserved] at (-1.5,0) {$z$};  
+    \node (z-prior) [unobserved] at (-3,0) {$\theta_m$};
+    \node (z-hyper) [label=above:$\alpha$] at (-4.5,0) {};
+    \filldraw [black] (-4.5,0) circle (3pt);
+    \node (w-hyper) [label=above:$\beta$] at (-1.5,2.0) {};
+    \filldraw [black] (-1.5,2.0) circle (3pt);
+    
+    \node (w-prior) [unobserved] at (0,2.0) {$\phi_k$};  
+    
+    \path
+    (z-j) edge [post] (w-j)
+    
+    (z-hyper) edge [post] (z-prior)
+    (z-prior) edge [post] (z-j)
+
+    (w-hyper) edge [post] (w-prior)
+    (w-prior) edge [post] (w-j)
+    ;
+
+    \node [draw,fit=(w-j) (z-prior), inner sep=14pt] (plate-context) {};
+    \node [above right] at (plate-context.south west) {$M$};
+    \node [draw,fit=(w-j) (z-j), inner sep=10pt] (plate-token) {};
+    \node [above right] at (plate-token.south west) {$N$};
+    
+    \node [draw,fit=(w-prior), inner sep=10pt] (plate-context) {};
+    \node [above right] at (plate-context.south west) {$K$};    
+
+  \end{tikzpicture}
+  \caption{Plate Diagram of LDA. For more information}
+  \label{fig:graphical-model}
 \end{figure}
 
 Above is what is known as a plate diagram of an LDA model where:
@@ -126,54 +169,6 @@ Above is what is known as a plate diagram of an LDA model where:
 \item $w$ is the specific word.
 \end{itemize}
 
-
-%\begin{itemize}
-%\item Let $K$ be the number of latent topics.
-%\item Topic-Word distribution: $\phi_k$ is a discrete probability distribution over a fixed vocabulary that represents the $k$th topic distribution. \\ $\phi_k \sim \text{Dirichlet}(\beta)$
-%
-%\item $\alpha$ is the per-di
-%\item Document-Topic distribution: $\theta_d$ is a document specific discrete probability distribution over a fixed number of topics. \\ $\theta_d \sim \text{Dirichlet}(\alpha)$
-%\item $z_i$ is topic index for word $w_i$.
-%\item From a document $\theta_d$ we select a topic $z_i$.
-%\end{itemize}
-%
-%
-%\begin{figure}[htp]
-%  \centering
-%  \begin{tikzpicture}
-%    [
-%      observed/.style={minimum size=15pt,circle,draw=blue!50,fill=blue!20},
-%      unobserved/.style={minimum size=15pt,circle,draw},
-%      hyper/.style={minimum size=1pt,circle,fill=black},
-%      post/.style={->,>=stealth',semithick},
-%    ]
-%
-%    \node (w-j) [observed] at (0,0) {$w_w$};
-%    \node (z-j) [unobserved] at (-1.5,0) {$z_w$};
-%    \node (z-prior) [unobserved] at (-3,0) {$\theta_d$};
-%    \node (z-hyper) [label=above:$\alpha$] at (-4.5,0) {};
-%    \filldraw [black] (-4.5,0) circle (3pt);
-%    \node (w-hyper) [label=above:$\beta$] at (-1.5,1.5) {};
-%    \filldraw [black] (-1.5,1.5) circle (3pt);
-%    
-%    \path
-%    (z-j) edge [post] (w-j)
-%    
-%    (z-hyper) edge [post] (z-prior)
-%    (z-prior) edge [post] (z-j)
-%
-%    (w-hyper) edge [post] (w-j)
-%    ;
-%
-%    \node [draw,fit=(w-j) (z-prior), inner sep=14pt] (plate-context) {};
-%    \node [above right] at (plate-context.south west) {$D$};
-%    \node [draw,fit=(w-j) (z-j), inner sep=10pt] (plate-token) {};
-%    \node [above right] at (plate-token.south west) {$N$};
-%
-%  \end{tikzpicture}
-%  \caption{Plate Diagram of LDA. For more information}
-%  \label{fig:graphical-model}
-%\end{figure}
 
 \end{document}
 

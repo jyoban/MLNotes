@@ -1,0 +1,31 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+
+\title{Foundation}
+\author{Jyotirmoy Banerjee}
+\begin{document}
+\maketitle
+
+
+\section{Bias-Variance}
+Suppose that we have a training set consisting of a set of points $x_{1},\dots ,x_{n}$ and real values $y_{i}$ associated with each point $x_{i}$. We assume that there is a function with noise $y=f(x)+\varepsilon$, where the noise, $\varepsilon$, has zero mean and variance $\sigma^{2}$.
+
+Finding an $\hat{f}$ that generalizes to points outside of the training set can be done with any of the countless algorithms used for supervised learning. It turns out that whichever function $\hat{f}$ we select, we can decompose its expected error on an unseen sample $x$ as follows:
+\[ \operatorname {E} _{D}{\Big [}{\big (}y-{\hat {f}}(x;D){\big )}^{2}{\Big ]}={\Big (}\operatorname {Bias} _{D}{\big [}{\hat {f}}(x;D){\big ]}{\Big )}^{2}+\operatorname {Var} _{D}{\big [}{\hat {f}}(x;D){\big ]}+\sigma ^{2} \]
+where
+\[ \operatorname {Bias} _{D}{\big [}{\hat {f}}(x;D){\big ]}=\operatorname {E} _{D}{\big [}{\hat {f}}(x;D){\big ]}-f(x) \]
+and
+\[ \operatorname {Var} _{D}{\big [}{\hat {f}}(x;D){\big ]}=\operatorname {E} _{D}[{\big (}\operatorname {E} _{D}[{\hat {f}}(x;D)]-{\hat {f}}(x;D){\big )}^{2}]. \]
+
+\end{document}
+

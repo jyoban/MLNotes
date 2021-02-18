@@ -1,0 +1,44 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+
+\title{Word2Vec}
+\author{Jyotirmoy Banerjee}
+\begin{document}
+\maketitle
+
+
+\section{The skip-gram model}
+The departure point of the paper is the skip-gram model. In this model we are
+given a corpus of words $w$ and their contexts $c$. We consider the conditional
+probabilities $p(c|w)$, and given a corpus \emph{Text}, the goal is to set the parameters
+$\theta$ of $p(c|w; \theta)$ so as to maximize the corpus probability:
+
+\begin{equation}
+\argmax \prod_{w \in \text{Text}} \Bigg[ \prod_{c \in C(w)} P(c|w;\theta) \Bigg]
+\end{equation}
+in this equation, $C(w)$ is the set of contexts of word $w$. Alternatively:
+\begin{equation}
+\argmax \prod_{(c,w) \in D} P(c|w;\theta)
+\end{equation}
+here $D$ is the set of all word and context pairs we extract from the text.
+
+One approach for parameterizing the skip-gram model follows the neural-network
+language models literature, and models the conditional probability $p(c|w; \theta)$ using soft-max:
+
+\begin{equation}
+ P(c|w;\theta) = \frac{\exp(v_c \cdot v_w)}{\sum_{c' \in C} \exp({v_{c'} \cdot v_w})}
+\end{equation}
+where $v_c$ and $v_w \in R^d$ are vector representations for c and w respectively, and C is the set of all available contexts.
+
+\end{document}
+

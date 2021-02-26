@@ -34,6 +34,17 @@ Stochastic gradient descent (SGD) in contrast performs a parameter update for ea
 Mini-batch gradient descent finally takes the best of both worlds and performs an update for every mini-batch of $n$ training examples:
 \[\theta = \theta - \eta \cdot \nabla_\theta J( \theta; x^{(i:i+n)}; y^{(i:i+n)})\]
 
+\subsection{Momentum}
+
+SGD has trouble navigating ravines, i.e. areas where the surface curves much more steeply in one dimension than in another, which are common around local optima. In these scenarios, SGD oscillates across the slopes of the ravine while only making hesitant progress along the bottom towards the local optimum.
+
+Momentum is a method that helps accelerate SGD in the relevant direction and dampens oscillations. It does this by adding a fraction $\gamma$ of the update vector of the past time step to the current update vector:
+
+\begin{align}
+v_{t} &=  \gamma  v_{t-1} + \eta \cdot \nabla_\theta J( \theta) \nonumber  \\ 
+\theta &= \theta - v_{t} \nonumber 
+\end{align}
+
 
 \end{document}
 

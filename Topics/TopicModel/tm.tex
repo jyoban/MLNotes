@@ -66,7 +66,7 @@ The support of the distribution is limited to a finite number of values. Multino
 \textbf{Problem:} Consider a die with 1 painted on three sides, 2 painted on two sides, and 3 painted on one side. If we roll this die ten times what is the probability we get five 1's, three 2's and two 3's? \newline
 \textbf{Solution:} The probability of the pattern $1,1,1,1,1,2,2,2,3,3$ is $\big(\frac{3}{6}\big)^5 \times \big(\frac{2}{6}\big)^3 \times \big( \frac{1}{6}\big)^2$. We conclude that the probability of getting five 1's, three 2's and two 3's is $\Mycomb[10]{5}\Mycomb[5]{3}\big(\frac{3}{6}\big)^5\big(\frac{2}{6}\big)^3\big( \frac{1}{6}\big)^2$  i.e.\ $\frac{10!}{5!3!2!}\big(\frac{3}{6}\big)^5\big(\frac{2}{6}\big)^3\big( \frac{1}{6}\big)^2$. 
 \newline
-\textbf{Definition:} We see that if we have $k$ possible outcomes for our experiment with probabilities ${\theta}_1,\cdots,{\theta}_k$, then the probability of getting exactly $x_i$ outcomes of type $i$ in $n = {\sum}_{i=0}^{k}{x_i}$ trails is as follows: \newline \[f(x_1,\dots,x_k;n,{\theta}_1,\cdots,{\theta}_k) = \frac{n!}{x_1!x_2!\cdots x_k!}{\theta_1}^{x_1},\dots,{\theta_k}^{x_k}\]
+\textbf{Definition:} We see that if we have $k$ possible outcomes for our experiment with probabilities ${\theta}_1,\cdots,{\theta}_k$, then the probability of getting exactly $x_i$ outcomes of type $i$ in $n = {\sum}_{i=1}^{k}{x_i}$ trails is as follows: \newline \[f(x_1,\dots,x_k;n,{\theta}_1,\cdots,{\theta}_k) = \frac{n!}{x_1!x_2!\cdots x_k!}{\theta_1}^{x_1},\dots,{\theta_k}^{x_k}\]
 
 \begin{itemize}
 \item $n$ trial

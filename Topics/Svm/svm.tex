@@ -71,11 +71,55 @@ y_ky_k (\vec{w}\cdot \vec{x}_k + b) &= y_k \\
 \end{align*}
 The classification rule is then $y \leftarrow \mathrm{sign} (\vec{w}\cdot\vec{x}+b)$. Using the dual solution $y \leftarrow \mathrm{sign} \big[\sum_i\alpha_iy_i(\vec{x_i}\cdot \vec{x})+b\big]$, where $\vec{x}$ is the support vector.
 
-\subsection{Kernel trick}
+\section{Soft Margin}
+The problem with Hard Margin SVM is that it only works for linearly separable data. However, this would not be the case in the real world. It is most likely that in practical cases the data will contain some noise and might not be linearly separable. We'll look at how Soft Margin SVM handles this problem.
+
+Basically, the trick Soft Margin SVM is using is very simple, it adds slack variables $\zeta_i$ to the constraints of the optimization problem. The constraints now become:
+
+\begin{equation}
+(\vec{w} \cdot \vec{x}_j + b)y_j \geq 1 - \zeta_i, \quad \forall j \nonumber
+\end{equation}
+
+By adding the slack variables, when minimizing the objective function, it is possible to satisfy the constraint even if the example does not meet the original constraint. The problem is we can always choose a large enough value of $\zeta$ so that all the examples will satisfy the constraints.
+
+One technique to handle this is to use regularization. 
+For example, we could use L1 regularization to penalize large values of $\zeta$. The regularized optimization problem becomes:
+
 \begin{align*}
-\max_{\vec{\alpha}\geq0, \sum_j \alpha_j y_j = 0} & \sum_j \alpha_j - \frac{1}{2} \sum_{i,j} y_iy_j\alpha_i\alpha_j K(\vec{x_i}\cdot \vec{x_j}) \\
-K(\vec{x_i}\cdot \vec{x_j}) &= \Phi (\vec{x_i}) \cdot \Phi (\vec{x_j})
+\min_{\vec{w},b} & \quad \frac{1}{2} ||\vec{w}||^2  + \sum \zeta_j\\
+\mathrm{where} & \quad (\vec{w} \cdot \vec{x}_j + b)y_j \geq 1, \quad \forall j
 \end{align*}
+
+Also, we want to make sure that we do not minimize the objective function by choosing negative values of $\zeta$. We add the constraints $\zeta_i \ge 0$. We also add a regularization parameter C to determine how important $\zeta$ should be, which means how much we want to avoid misclassifying each training example. The regularized optimization problem becomes:
+
+\begin{align*}
+\min_{\vec{w},b} & \quad \frac{1}{2} ||\vec{w}||^2  + C  \sum \zeta_j\\
+\mathrm{where} & \quad (\vec{w} \cdot \vec{x}_j + b)y_j \geq 1, \, \zeta_j \ge 0 \quad \forall j
+\end{align*}
+
+\textbf{Regularization parameter C}:
+It determines how important $\zeta$ should be. A smaller C emphasizes the importance of $\zeta$ and a larger C diminishes the importance of $\zeta$.
+
+Another way of thinking of C is it gives you control of how the SVM will handle errors. If we set C to positive infinite, we will get the same result as the Hard Margin SVM. On the contrary, if we set C to 0, there will be no constraint anymore, and we will end up with a hyperplane not classifying anything. The rules of thumb are: small values of C will result in a wider margin, at the cost of some misclassifications; large values of C will give you the Hard Margin classifier and tolerates zero constraint violation. We need to find a value of C which will not make the solution be impacted by the noisy data.
+
+\subsection{Kernel trick}
+What if the data are characteristically non-linearly separable? Can we still separate the data using SVM? The answer is of course Yes. And we’ll talk about a technique called kernel trick to deal with this.
+
+Image you have a two-dimensional non-linearly separable dataset, you would like to classify it using SVM. It looks like not possible because the data is not linearly separable. However, if we transform the two-dimensional data to a higher dimension, say, three-dimension or even ten-dimension, we would be able to find a hyperplane to separate the data.
+
+The problem is, if we have a large dataset containing, say, millions of examples, the transformation will take a long time to run, let alone the calculations in the later optimization problem.
+
+%To solve this problem, we actually only care about the result of the dot product $x_i\cdot x_j$. If there is a function which could calculate the dot product and the result is the same as when we transform the data into higher dimension, it would be fantastic. This function is called a kernel function.
+
+Suppose now that we would like to learn a nonlinear classification rule which corresponds to a linear classification rule for the transformed data points $\Phi (\vec{x_i})$. Moreover, we are given a kernel function $K$ which satisfies $K(\vec{x_i}, \vec{x_j}) = \Phi (\vec{x_i}) \cdot \Phi (\vec{x_j})$. Then we can apply the kernel trick to rewrite the Wolfe dual problem as:
+
+\begin{align*}
+\max_{\vec{\alpha}\geq0, \sum_j \alpha_j y_j = 0} & \sum_j \alpha_j - \frac{1}{2} \sum_{i,j} y_iy_j\alpha_i\alpha_j K(\vec{x_i}, \vec{x_j}) \\
+\mathrm{where} \quad & K(\vec{x_i}, \vec{x_j}) = \Phi (\vec{x_i}) \cdot \Phi (\vec{x_j})
+\end{align*}
+
+
+E.g.\, the RBF kernel is defined as $K(x_i,x_j)= \exp (- \gamma || x_i - x_j ||^2)$.
 
 \end{document}
 

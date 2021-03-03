@@ -1,0 +1,56 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+
+\title{Transformer}
+\author{Jyotirmoy Banerjee}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\begin{itemize}
+\item Example input: Thinking Machines.
+\item \textbf{Embedding}: X1, X2.
+
+\begin{itemize}
+\item Queries: $Q1 = X1 \cdot W^Q$, $Q2 = X2 \cdot W^Q$.
+\item Keys: $K1 = X1 \cdot W^K$, $K2 = X2 \cdot W^K$.  
+\item Values: $V1 = X1 \cdot W^V$, $V2 = X2 \cdot W^V$. 
+\end{itemize}
+Description: The first step in calculating self-attention is to create three vectors from each of the encoder’s input vectors (in this case, the embedding of each word). So for each word, we create a Query vector, a Key vector, and a Value vector. These vectors are created by multiplying the embedding by three matrices that we trained during the training process.
+
+\item \textbf{Score}: Q1.K1.
+
+Description: The second step in calculating self-attention is to calculate a score. Say we’re calculating the self-attention for the first word in this example, ``Thinking''. We need to score each word of the input sentence against this word. The score determines how much focus to place on other parts of the input sentence as we encode a word at a certain position.
+
+The score is calculated by taking the dot product of the query vector with the key vector of the respective word we’re scoring. So if we’re processing the self-attention for the word in position 1, the first score would be the dot product of q1 and k1. The second score would be the dot product of q1 and k2.
+
+\item \textbf{Softmax}: Divide scores by $\sqrt{d_K}$ where $d_K$ is length of vector K. Followed by Softmax.
+
+Description: The third and forth steps are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other possible values here, but this is the default), then pass the result through a softmax operation. Softmax normalizes the scores so they’re all positive and add up to 1.
+
+This softmax score determines how much each word will be expressed at this position. Clearly the word at this position will have the highest softmax score, but sometimes it’s useful to attend to another word that is relevant to the current word.
+
+\item \textbf{Softmax x Value}
+
+Description: The fifth step is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words.
+
+\item \textbf{Sum}
+
+Description: The sixth step is to sum up the weighted value vectors. This produces the output of the self-attention layer at this position (for the first word).
+\end{itemize}
+
+
+
+\end{document}
+

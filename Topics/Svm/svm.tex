@@ -121,7 +121,7 @@ The problem is, if we have a large dataset containing, say, millions of examples
 Suppose now that we would like to learn a nonlinear classification rule which corresponds to a linear classification rule for the transformed data points $\Phi (\vec{x_i})$. Moreover, we are given a kernel function $K$ which satisfies $K(\vec{x_i}, \vec{x_j}) = \Phi (\vec{x_i}) \cdot \Phi (\vec{x_j})$. Then we can apply the kernel trick to rewrite the Wolfe dual problem as:
 
 \begin{align*}
-\max_{\vec{\alpha}\geq0, \sum_j \alpha_j y_j = 0} & \sum_j \alpha_j - \frac{1}{2} \sum_{i,j} y_iy_j\alpha_i\alpha_j K(\vec{x_i}, \vec{x_j}) \\
+\max_{0 \leq \vec{\alpha}\leq C, \sum_j \alpha_j y_j = 0} & \sum_j \alpha_j - \frac{1}{2} \sum_{i,j} y_iy_j\alpha_i\alpha_j K(\vec{x_i}, \vec{x_j}) \\
 \mathrm{where} \quad & K(\vec{x_i}, \vec{x_j}) = \Phi (\vec{x_i}) \cdot \Phi (\vec{x_j})
 \end{align*}
 

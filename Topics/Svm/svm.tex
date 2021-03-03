@@ -1,0 +1,81 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+
+\title{SVM}
+\author{Jyotirmoy Banerjee}
+\begin{document}
+\maketitle
+
+
+\section{Introduction}
+Hyperplane that partitions the two classes:
+\begin{align*}
+y &= \vec{w}^T\vec{x} + b
+\end{align*}
+Hyperplanes over the support vectors:
+\begin{align*}
+\vec{w}^T\vec{x} + b &= +1 \\
+\vec{w}^T\vec{x} + b &= -1 
+\end{align*}
+The best partition line is the line parallel and equidistant from the support vectors, where the distance between the support vectors is the maximum and the partition line separates the two classes well.
+Subtraction the above two lines: 
+\begin{align*}
+\vec{w}^T(\vec{x_1} - \vec{x_2}) &= +2 \\
+\frac{\vec{w}^T}{||\vec{w}||}(\vec{x}_1 - \vec{x}_2) &= \frac{2}{||\vec{w}||} 
+\end{align*}
+Distance between the support vectors is given as: $\frac{\vec{w}^T}{||\vec{w}||}(\vec{x}_1 - \vec{x}_2)$. Increasing the distance between them is equivalent to minimizing the term $\frac{2}{||\vec{w}||}$, i.e.\ maximizing the margins.
+The criteria that the partition line separates the two classes well is given as: $y(\vec{w}^T\vec{x}_j + b) \geq 1 \, \forall{j}$. As squaring preserves the order of the values (monotonic), maximizing $\frac{2}{||\vec{w}||}$ is equivalent to minimizing $\frac{||\vec{w}||^2}{2}$. 
+The resultant optimization problem is of the form:
+\begin{align*}
+\min_{\vec{w},b} & \quad \frac{1}{2} ||\vec{w}||^2 \\
+\mathrm{where} & \quad (\vec{w} \cdot \vec{x}_j + b)y_j \geq 1, \quad \forall j
+\end{align*}
+The Lagrangian is:
+\begin{align*}
+L(\vec{w},\alpha) & =  \frac{1}{2} ||\vec{w}||^2  - \sum_j \alpha_j [(\vec{w} \cdot \vec{x}_j + b)y_j - 1]
+\end{align*}
+Our goal now is to solve:
+\begin{align*}
+\min_{\vec{w},b} \, \max_{\vec{\alpha}\geq0} &= \frac{1}{2}||\vec{w}||^2 - \sum_j \alpha_j [(\vec{w} \cdot \vec{x}_j + b)y_j - 1] \quad \mathrm{(Primal)}
+\end{align*}
+Swapping min and max, as the \emph{Slater's condition} from convex optimization guarantees that these two optimization problems are equivalent.
+\begin{align*}
+\max_{\vec{\alpha}\geq0} \, \min_{\vec{w},b} &= \frac{1}{2}||\vec{w}||^2 - \sum_j \alpha_j [(\vec{w} \cdot \vec{x}_j + b)y_j - 1] \quad \mathrm{(Dual)}
+\end{align*}
+Let us solve for optimal $\vec{w}, b$ as a function of $\vec{\alpha}$: 
+\begin{align*}
+\frac{\partial L}{\partial \vec{w}} = \vec{w} - \sum_j \alpha_j y_j \vec{x}_j \quad & \rightarrow \quad \vec{w} = \sum_j \alpha_j y_j \vec{x}_j \\
+\frac{\partial L}{\partial b} = - \sum_j \alpha_j y_j \quad & \rightarrow \quad \sum_j \alpha_j y_j = 0
+\end{align*}
+Substituting these values back in (and simplifying), we obtain: 
+\begin{align*}
+\max_{\vec{\alpha}\geq0, \sum_j \alpha_j y_j = 0} & \sum_j \alpha_j - \frac{1}{2} \sum_{i,j} y_iy_j\alpha_i\alpha_j (\vec{x_i}\cdot \vec{x_j}) \quad \mathrm{(Dual)}
+\end{align*}
+Once $\alpha$ is estimated from the optimization function, we obtain $\vec{w}, b$.
+$\vec{w} = \sum_j \alpha_j y_j \vec{x}_j$ and $b = y_k - \vec{w}\cdot \vec{x}_k$, for any $k$ where $\alpha_k > 0$.
+The steps used to obtain $b$ are:
+\begin{align*}
+y_k (\vec{w}\cdot \vec{x}_k + b) &= 1 \\
+y_ky_k (\vec{w}\cdot \vec{x}_k + b) &= y_k \\
+\vec{w}\cdot \vec{x}_k + b &= y_k
+\end{align*}
+The classification rule is then $y \leftarrow \mathrm{sign} (\vec{w}\cdot\vec{x}+b)$. Using the dual solution $y \leftarrow \mathrm{sign} \big[\sum_i\alpha_iy_i(\vec{x_i}\cdot \vec{x})+b\big]$, where $\vec{x}$ is the support vector.
+
+\subsection{Kernel trick}
+\begin{align*}
+\max_{\vec{\alpha}\geq0, \sum_j \alpha_j y_j = 0} & \sum_j \alpha_j - \frac{1}{2} \sum_{i,j} y_iy_j\alpha_i\alpha_j K(\vec{x_i}\cdot \vec{x_j}) \\
+K(\vec{x_i}\cdot \vec{x_j}) &= \Phi (\vec{x_i}) \cdot \Phi (\vec{x_j})
+\end{align*}
+
+\end{document}
+

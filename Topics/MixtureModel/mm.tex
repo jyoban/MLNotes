@@ -54,7 +54,7 @@ l(\theta) = \sum_{i=1}^{n} \log \left( \sum_{k=1}^{K}  \pi_k \mathcal{N} (x_i ; 
 \]
 
 \section{Expectation Maximization - Intuition}
-If we were to differentiate with respect to $\mu_k$ and set the expression equal to zero, we would get:
+If we were to differentiate $l(\theta)$ with respect to $\mu_k$ and set the expression equal to zero, we would get:
 
 \[
 \sum_{i=1}^{n} \frac{1}{\sum_{k=1}^{K}  \pi_k \mathcal{N} (x_i ; \mu_k, {\sigma_k}^2)} {\pi_k \mathcal{N} (x_i ; \mu_k, {\sigma_k}^2}) \frac{\left(x_i - \mu_k\right)}{{\sigma_k}^2}
@@ -71,10 +71,18 @@ Step 2:\\
 \sum_{i=1}^{n} \gamma_{Z_i} (k) \frac{\left(x_i - \mu_k\right)}{{\sigma_k}^2} = 0
 \]
 \[
-\hat{\mu_k} = \frac{\sum_{i=1}^{n} \gamma_{Z_i} (k) x_i}{\sum_{i=1}^{n} \gamma_{Z_i} (k)}
+\hat{\mu_k} = \frac{\sum_{i=1}^{n} \gamma_{Z_i} (k) x_i}{\sum_{i=1}^{n} \gamma_{Z_i} (k)} = \frac{1}{N_k} \sum_{i=1}^{n} \gamma_{Z_i} (k) x_i
 \]
 
+Where we set $N_k=\sum_{i=1}^{n}\gamma_{z_i}(k)$. We can think of $N_k$ as the effective number of points assigned to component $k$.
+Similarly, if we apply a similar method to finding $\hat{\sigma}^{2}_{k}$ and $\hat{\pi}_{k}$, we find that:
 
+\[
+\hat{\sigma}^{2}_{k} = \frac{1}{N_k} \sum_{i=1}^{n} \gamma_{Z_i} (k) (x_i - \mu_k)^2
+\]
+\[
+\hat{\pi}_{k} = \frac{N_k}{n}
+\]
 
 \section{Expectation Maximization}
 The EM algorithm attempts to find maximum likelihood estimates for models with latent variables. In this section, we describe a more abstract view of EM which can be extended to other latent variable models.

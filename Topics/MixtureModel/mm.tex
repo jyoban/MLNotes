@@ -39,7 +39,44 @@ L(\pi) = \prod_{i=1}^{n} P(X_i | \pi) = \prod_{i=1}^{n} \sum_{k=1}^{K} P(X_i | Z
 
 In the Gaussian mixture model setting the $k$-th component is $\mathcal{N}(\mu_k,\sigma_k)$ and the mixture proportions are $\pi_k$.
 
-\section{Expectation Maximization}:
+\section{MLE for Gaussian Mixture}
+
+Now we attempt the same strategy for deriving the MLE of the Gaussian mixture model. Our unknown parameters are $\theta={\mu_1,\cdots,\mu_K,\sigma_1,\cdots,\sigma_K,\pi_1,\cdots,\pi_K}$, and so from the first section of this note, our likelihood is:
+
+\[
+L(\theta | X_1, \cdots ,X_n) =  \prod_{i=1}^{n} \sum_{k=1}^{K}  \pi_k \mathcal{N} (x_i ; \mu_k, {\sigma_k}^2)
+\]
+
+So our log-likelihood is:
+
+\[
+l(\theta) = \sum_{i=1}^{n} \log \left( \sum_{k=1}^{K}  \pi_k \mathcal{N} (x_i ; \mu_k, {\sigma_k}^2) \right)
+\]
+
+\section{Expectation Maximization - Intuition}
+If we were to differentiate with respect to $\mu_k$ and set the expression equal to zero, we would get:
+
+\[
+\sum_{i=1}^{n} \frac{1}{\sum_{k=1}^{K}  \pi_k \mathcal{N} (x_i ; \mu_k, {\sigma_k}^2)} {\pi_k \mathcal{N} (x_i ; \mu_k, {\sigma_k}^2}) \frac{\left(x_i - \mu_k\right)}{{\sigma_k}^2}
+\]
+
+
+Step 1:\\
+\[
+\gamma_{Z_i} (k) =  \frac{\pi_k \mathcal{N} (\mu_k, {\sigma_k}^2)}{\sum_{k=1}^{K}  \pi_k \mathcal{N} (\mu_k, {\sigma_k}^2)} {}
+\]
+
+Step 2:\\
+\[
+\sum_{i=1}^{n} \gamma_{Z_i} (k) \frac{\left(x_i - \mu_k\right)}{{\sigma_k}^2} = 0
+\]
+\[
+\hat{\mu_k} = \frac{\sum_{i=1}^{n} \gamma_{Z_i} (k) x_i}{\sum_{i=1}^{n} \gamma_{Z_i} (k)}
+\]
+
+
+
+\section{Expectation Maximization}
 The EM algorithm attempts to find maximum likelihood estimates for models with latent variables. In this section, we describe a more abstract view of EM which can be extended to other latent variable models.
 
 Let $X$ be the entire set of observed variables and $Z$ the entire set of latent variables. The log-likelihood is therefore:

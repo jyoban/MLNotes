@@ -55,7 +55,7 @@ We typically don't know $Z$, but the information we do have about $Z$ is contain
 In the E-step, we use the current value of the parameters $\theta^0$ to find the posterior distribution of the latent variables given by $P(Z|X,\theta^0)$. We then use this to find the expectation of the complete data log-likelihood, with respect to this posterior, evaluated at an arbitrary $\theta$. This expectation is denoted $Q(\theta,\theta^0)$ and it equals:
 
 \[ 
-Q(\theta, \theta^0) = E_{Z | X, \theta^0} [log(P(X,Z|\theta))] = \sum_Z P(Z | X, \theta^0) log(P(X,Z|\theta))
+Q(\theta, \theta^0) = E_{Z | X, \theta^0} [log(P(X,Z|\theta))] = \sum_Z P(Z | X, \theta^0) \log(P(X,Z|\theta))
 \]
 
 In the M-step, we determine the new parameter $\hat{\theta}$ by maximizing Q:

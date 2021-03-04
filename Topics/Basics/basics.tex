@@ -5,6 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{mathtools}
 \usepackage{enumitem}
+\usepackage{multirow}
 \setlist{nolistsep}
 
 \DeclareMathOperator*{\argmax}{argmax}
@@ -26,6 +27,45 @@ where
 \[ \operatorname {Bias} _{D}{\big [}{\hat {f}}(x;D){\big ]}=\operatorname {E} _{D}{\big [}{\hat {f}}(x;D){\big ]}-f(x) \]
 and
 \[ \operatorname {Var} _{D}{\big [}{\hat {f}}(x;D){\big ]}=\operatorname {E} _{D}[{\big (}\operatorname {E} _{D}[{\hat {f}}(x;D)]-{\hat {f}}(x;D){\big )}^{2}]. \]
+
+
+\section{Regularization}
+L1 and L2 regularization add constraints to the optimization problem. The curve $H_0$ is the hypothesis. The solution to this system is the set of points where the $H_0$ meets the constraints.
+
+Now, in the case of L2 regularization, in most cases, the the hypothesis is tangential to the $||w||_2$. The point of intersection has both $x_1$ and $x_2$ components. On the other hand, in L1, due to the nature of $||w||_1$, the viable solutions are limited to the corners, which are on one axis only - in the above case $x_1$. Value of $x_2 = 0$. This means that the solution has eliminated the role of $x_2$ leading to sparsity. Extend this to higher dimensions and you can see why L1 regularization leads to solutions to the optimization problem where many of the variables have value $0$.
+In other words, L1 regularization leads to sparsity.
+
+\section{Loss functions for classification}
+\begin{enumerate}
+\item Square loss: While more commonly used in regression, the square loss function can be re-written as a function $\phi (yf({\vec {x}}))$ and utilized for classification. Defined as:
+\[V(f({\vec {x}}),y)=(1-yf({\vec {x}}))^{2}\]
+the square loss function is both convex and smooth and matches the $0-1$ indicator function when $yf({\vec {x}})=0$ and when $yf({\vec {x}})=1$. However, the square loss function tends to penalize outliers excessively, leading to slower convergence rates (with regards to sample complexity) than for the logistic loss or hinge loss functions.
+\item Hinge loss: The hinge loss function is defined as
+$V(f({\vec {x}}),y)=\max(0,1-yf({\vec {x}}))=|1-yf({\vec {x}})|_{{+}}$.
+The hinge loss provides a relatively tight, convex upper bound on the $0-1$ indicator function. Specifically, the hinge loss equals the $0-1$ indicator function when $\mathrm{sgn}(f({\vec {x}}))=y$ and $|yf({\vec {x}})|\geq 1$. In addition, the empirical risk minimization of this loss is equivalent to the classical formulation for support vector machines (SVMs). Correctly classified points lying outside the margin boundaries of the support vectors are not penalized, whereas points within the margin boundaries or on the wrong side of the hyperplane are penalized in a linear fashion compared to their distance from the correct boundary.
+\item Logistic loss: The logistic loss function is defined as
+\[ V(f({\vec {x}}),y)={\frac {1}{\ln 2}}\ln(1+e^{{-yf({\vec {x}})}})\]
+This function displays a similar convergence rate to the hinge loss function, and since it is continuous, gradient descent methods can be utilized. However, the logistic loss function does not assign zero penalty to any points. Instead, functions that correctly classify points with high confidence (i.e., with high values of $|f({\vec {x}})|)$ are penalized less. This structure leads the logistic loss function to be sensitive to outliers in the data.
+The minimizer of $I[f]$ for the logistic loss function is
+\[ f_{{\text{Logistic}}}^{*}=\ln \left({\frac {p(1\mid x)}{1-p(1\mid x)}}\right).\]
+\item Cross entropy loss: Using the alternative label convention $t=(1+y)/2$ so that $t \in \{0,1\}$, the cross entropy loss is defined as 
+\[V(f(\vec{x}),t) = -t\ln(f(\vec{x}))-(1-t)\ln(1-f(\vec{x}))\]
+The cross entropy loss is closely related to the Kullback-Leibler divergence between the empirical distribution and the predicted distribution. This function is not naturally represented as a product of the true label and the predicted value, but is convex and can be minimized using stochastic gradient descent methods. The cross entropy loss is ubiquitous in modern deep neural networks. 
+\end{enumerate}
+
+\section{Metrics}
+
+\begin{tabular}{l|l|c|c|}
+\multicolumn{2}{c}{}&\multicolumn{2}{c}{True condition}\\
+\cline{3-4}
+\multicolumn{2}{c|}{}&Positive&Negative\\
+\cline{2-4}
+\multirow{2}{*}{Predicted condition}& Positive & $TP$ & $FP \, \mbox{(Type I error)}$\\
+\cline{2-4}
+& Negative & $FN \, \mbox{(Type II error)}$ & $TN$\\
+\cline{2-4}
+\end{tabular}
+
 
 \end{document}
 

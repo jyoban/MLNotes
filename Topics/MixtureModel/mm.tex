@@ -39,5 +39,29 @@ L(\pi) = \prod_{i=1}^{n} P(X_i | \pi) = \prod_{i=1}^{n} \sum_{k=1}^{K} P(X_i | Z
 
 In the Gaussian mixture model setting the $k$-th component is $\mathcal{N}(\mu_k,\sigma_k)$ and the mixture proportions are $\pi_k$.
 
+\section{Expectation Maximization}:
+The EM algorithm attempts to find maximum likelihood estimates for models with latent variables. In this section, we describe a more abstract view of EM which can be extended to other latent variable models.
+
+Let $X$ be the entire set of observed variables and $Z$ the entire set of latent variables. The log-likelihood is therefore:
+
+\[ 
+\log {(P(X|\Theta))} = \log \left( {\sum_Z P(X, Z |\Theta)} \right)
+\]
+
+The existence of the sum inside the logarithm prevents us from applying the log to the densities which results in a complicated expression for the MLE. Now suppose that we observed both $X$ and $Z$. We call $\{X,Z\}$ the complete data set, and we say $X$ is incomplete. As we noted previously, if we knew $Z$, the maximization would be easy.
+
+We typically don't know $Z$, but the information we do have about $Z$ is contained in the posterior $P(Z|X,\theta)$. Since we don't know the complete log-likelihood, we consider its expectation under the posterior distribution of the latent variables. This corresponds to the E-step above. In the M-step, we maximize this expectation to find a new estimate for the parameters.
+
+In the E-step, we use the current value of the parameters $\theta^0$ to find the posterior distribution of the latent variables given by $P(Z|X,\theta^0)$. We then use this to find the expectation of the complete data log-likelihood, with respect to this posterior, evaluated at an arbitrary $\theta$. This expectation is denoted $Q(\theta,\theta^0)$ and it equals:
+
+\[ 
+Q(\theta, \theta^0) = E_{Z | X, \theta^0} [log(P(X,Z|\theta))] = \sum_Z P(Z | X, \theta^0) log(P(X,Z|\theta))
+\]
+
+In the M-step, we determine the new parameter $\hat{\theta}$ by maximizing Q:
+\[
+\hat{\theta} =  \argmax_{\theta} Q(\theta, \theta^0) 
+\]
+
 \end{document}
 

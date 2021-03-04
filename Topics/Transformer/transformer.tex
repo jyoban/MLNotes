@@ -41,13 +41,14 @@ Description: The third and forth steps are to divide the scores by 8 (the square
 
 This softmax score determines how much each word will be expressed at this position. Clearly the word at this position will have the highest softmax score, but sometimes it’s useful to attend to another word that is relevant to the current word.
 
-\item \textbf{Softmax x Value}
+\item \textbf{Softmax x Value}:
 
 Description: The fifth step is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out irrelevant words.
 
-\item \textbf{Sum}
+\item \textbf{Sum}: Z
 
 Description: The sixth step is to sum up the weighted value vectors. This produces the output of the self-attention layer at this position (for the first word).
+\[  \mathbf{Z} = \text{Softmax}\left(\frac{\mathbf{Q} \mathbf{K}^T}{\sqrt{d_k}}\right) \mathbf{V} \]
 \end{itemize}
 
 

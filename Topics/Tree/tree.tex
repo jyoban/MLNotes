@@ -315,7 +315,33 @@ AdaBoost is equivalent to forward stage-wise additive modelling using the loss f
 L(y, f(x)) &= \exp{(-y f(x))} \\
 \end{align*}
 
-\subsection{XGBoost}
+In adaboost each classifier has different weights assigned to it based on the classifier's performance (more weight is assigned to the classifier when accuracy is more and vice-verse), weights are also assigned to the observations at the end of every round, in such a way that wrongly predicted observations have increased weight resulting in their probability of being picked more often in the next classifier's sample. So, the consecutive training set depends on their previous training set, and hence correlation exists between the built trees.
+
+Thus, Adaboost increases the predictive accuracy by assigning weights to both observations at end of every tree and weights(scores) to every classifier. Hence, in Adaboost, every classifier has a different weightage on final prediction contrary to the random forest where all trees are assigned equal weights.
+
+
+
+\subsection{Gradient Boosting Machine (GBM)}
+
+Just like AdaBoost, Gradient Boost also combines a number of weak learners to form a strong learner. Here, the residual of the current classifier becomes the input for the next consecutive classifier on which the trees are built, and hence it is an additive model. The residuals are captured in a step-by-step manner by the classifiers, in order to capture the maximum variance within the data, this is done by introducing the learning rate to the classifiers.
+
+By this method, we are slowly inching in the right direction towards better prediction (This is done by identifying negative gradient and moving in the opposite direction to reduce the loss, hence it is called Gradient Boosting in line with Gradient Descent where similar logic is employed). Thus, by number of classifiers, we arrive at a predictive value very close to the observed value.
+
+Initially, a tree with a single node is built which predicts the aggregated value of $Y$ in case of regression or log(odds) of $Y$ for classification problems after which trees with greater depth are grown on previous classifier's residuals. Learning rates are given as constant for every tree so that the model takes small steps in the right direction to capture the variance and train the classifier on it. Unlike Adaboost, here all the trees are given equal weights.
+
+
+\begin{table}[hbt]
+\begin{tabular}{p{0.05\linewidth} | p{0.4\linewidth} | p{0.4\linewidth}}
+\hline
+SNo & Adaboost & Gradient Boost \\
+\hline
+1&  An additive model where shortcomings of previous models are identified by high-weight data points. &  An additive model where shortcomings of previous models are identified by the gradient.  \\
+ 2&  The trees are usually grown as decision stumps. &  The trees are grown to a greater depth usually ranging from 8 to 32 terminal nodes.  \\
+ 3&  Each classifier has different weights assigned to the final prediction based on its performance. &   All classifiers are weighed equally and their predictive capacity is restricted with learning rate to increase accuracy. \\
+ 4&  It gives weights to both classifiers and observations thus capturing maximum variance within data. &  It builds trees on previous classifier's residuals thus capturing variance in data.  \\
+ \hline   
+\end{tabular}
+\end{table}
 
 
 \end{document}

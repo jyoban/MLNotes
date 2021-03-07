@@ -16,16 +16,33 @@
 \begin{document}
 \maketitle
 
-
 \section{Hidden Markov Model}
 
 \begin{itemize}
-\item $\mathbf{Q} = q_1,q_2, \cdots, q_N$: a set of $N$ states.
+\item $\mathbf{Q} = q_1,q_2, \cdots, q_N$: a set of $N$ \emph{hidden} states.
 \item $\mathbf{A} = a_{11},a_{12}, \cdots, a_{n1}, \cdots, a_{nn}$: a transition probability matrix $A$, each $a_{ij}$ representing the probability of moving from state $i$ to state $j$, s.t.\ $\sum_{j=1}^{n}a_{ij} = 1 \quad  \forall i$.
 \item $\mathbf{O} = o_1, o_2, \cdots, o_T$: a sequence of $T$ observations, each one drawn from a vocabulary $V = v_1, v_2, \cdots, v_V$
 \item $\mathbf{B} = b_i(o_t)$: a sequence of observation likelihoods, also called emission probabilities, each expressing the probability of an observation $o_t$ being generated from a state $i$.
 \item $\mathbf{q_0,q_F}$: a special start state and end (final) state which are not associated with observations, together with transition probabilities $a_{01},a_{02}, \cdots, a_{0n}$ out of the start state and $a_{n1},a_{n2}, \cdots, a_{nn}$ out of the end state.
 \end{itemize}
+
+A first-order hidden Markov model instantiates two simplifying assumptions.
+First, as with a first-order Markov chain, the probability of a particular state depends
+only on the previous state:
+\[\text{Markov Assumption}:  P(q_i | q_1,\cdots q_{i-1}) = P(q_i | q_{i-1}) \]
+
+Second, the probability of an output observation $o_i$ depends only on the state that
+produced the observation $q_i$ and not on any other states or any other observations:
+\[\text{Output Independence}: P(o_i|q_1,\cdots,q_i,\cdots,q_T,o_1,\cdots,o_i,\cdots,o_T) = P(o_i | q_i)\]
+
+The joint probability of hidden states and observation is:
+
+\[ P(O, Q) = P(O|Q) P(Q) = \prod_{i=1}^{n} P(o_i | q_i) \prod_{i-1}^{n} P(q_i | q_{i-1}) \]
+
+
+For an HMM with $N$ hidden states and an observation sequence of $T$ observations, there are $N^T$ possible hidden sequences. For real tasks, where $N$ and $T$ are both large, $N^T$ is a very large number, and so we cannot compute the total observation likelihood by computing a separate observation likelihood for each hidden state sequence and then summing them up. Instead of using such an extremely exponential algorithm, we use an efficient $(O(N^2 T))$ algorithm called the forward algorithm. The forward algorithm is a kind of dynamic programming algorithm, i.e., an algorithm that uses a table to store intermediate values as it builds up the probability of the observation sequence.
+
+A limitations of HMM is it acquires the joint distribution $P(Y, X)$ of the state and the observed sequence, while in the estimation issue, we need a conditional probability $P(Y|X)$.
 
 \end{document}
 

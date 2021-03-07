@@ -272,6 +272,11 @@ In the case of a random forest, hyperparameters include:
 \item \texttt{bootstrap} = method for sampling data points (with or without replacement)
 \end{enumerate}
 
+\textbf{Variable Importance}: As the Bagged decision trees are constructed, we can calculate how much the error function drops for a variable at each split point.
+In regression problems this may be the drop in sum squared error and in classification this might be the Gini score.
+These drops in error can be averaged across all decision trees and output to provide an estimate of the importance of each input variable. The greater the drop when the variable was chosen, the greater the importance.
+These outputs can help identify subsets of input variables that may be most or least relevant to the problem and suggest at possible feature selection experiments you could perform where some features are removed from the dataset.
+
 \section{Boosting}
 Boosting refers to a group of algorithms that utilize weighted averages to make weak learners into stronger learners. Unlike bagging that had each model run independently and then aggregate the outputs at the end without preference to any model. Boosting is all about `teamwork'. Each model that runs, dictates what features the next model will focus on.
 Boosting also requires bootstrapping. However, there is another difference here. Unlike in bagging, boosting weights each sample of data. This means some samples will be run more often than others.

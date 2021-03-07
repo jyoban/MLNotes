@@ -44,5 +44,19 @@ For an HMM with $N$ hidden states and an observation sequence of $T$ observation
 
 A limitations of HMM is it acquires the joint distribution $P(Y, X)$ of the state and the observed sequence, while in the estimation issue, we need a conditional probability $P(Y|X)$.
 
+\section{Generative vs. Discriminative}
+Both generative models and discriminative models describe distributions over $(y,x)$, but they work in different directions. A generative model, such as the naive Bayes classifier and the HMM, is a family of joint distributions that factorizes as $p(y,x) = p(y)p(x|y)$, that is, it describes how to sample, or ``generate'', values for features given the label. A discriminative model, such as the logistic regression model, is a family of conditional distributions $p(y|x)$, that is, the classification rule is modeled directly. 
+
+%https://www.pure.ed.ac.uk/ws/portalfiles/portal/10482724/crftut_fnt.pdf
+
+The main conceptual difference between discriminative and generative models is that a conditional distribution $p(y|x)$ does not include a model of $p(x)$, which is not needed for classification anyway. The difficulty in modeling $p(x)$ is that it often contains many highly dependent features that are difficult to model. The principal advantage of discriminative modeling is that it is better suited to including rich, overlapping features. 
+
+By modeling the conditional distribution directly, we can remain agnostic about the form of $p(x)$. Discriminative models, such as CRFs, make conditional independence assumptions among $y$, and assumptions about how the y can depend on x, but do not make conditonal independence assumptions among x.
+
+\section{Linear-chain CRFs}
+To motivate our introduction of linear-chain CRFs, we begin by considering the conditional distribution $p(y|x)$ that follows from the joint distribution $p(y,x)$ of an HMM. The key point is that this conditional distribution is in fact a CRF with a particular choice of feature functions.
+
+
+
 \end{document}
 

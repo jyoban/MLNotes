@@ -17,7 +17,15 @@
 \maketitle
 
 
-\section{Introduction}
+\section{Hidden Markov Model}
+
+\begin{itemize}
+\item $\mathbf{Q} = q_1,q_2, \cdots, q_N$: a set of $N$ states.
+\item $\mathbf{A} = a_{11},a_{12}, \cdots, a_{n1}, \cdots, a_{nn}$: a transition probability matrix $A$, each $a_{ij}$ representing the probability of moving from state $i$ to state $j$, s.t.\ $\sum_{j=1}^{n}a_{ij} = 1 \quad  \forall i$.
+\item $\mathbf{O} = o_1, o_2, \cdots, o_T$: a sequence of $T$ observations, each one drawn from a vocabulary $V = v_1, v_2, \cdots, v_V$
+\item $\mathbf{B} = b_i(o_t)$: a sequence of observation likelihoods, also called emission probabilities, each expressing the probability of an observation $o_t$ being generated from a state $i$.
+\item $\mathbf{q_0,q_F}$: a special start state and end (final) state which are not associated with observations, together with transition probabilities $a_{01},a_{02}, \cdots, a_{0n}$ out of the start state and $a_{n1},a_{n2}, \cdots, a_{nn}$ out of the end state.
+\end{itemize}
 
 \end{document}
 

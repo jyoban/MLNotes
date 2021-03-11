@@ -32,8 +32,31 @@ Let's consider a simple simplest neural network: one input neuron, one hidden la
 Let's apply the chain rule to solve for $\frac{\partial J(\theta)}{\partial \theta_2}$.
 \[
 \frac{\partial J(\theta)}{\partial \theta_2}
-=  \left( \frac{\partial J(\theta)}{\partial a^{(3)}} \right) \left(  \frac{\partial a^{(3)}}{\partial z} \right) \left(  \frac{\partial z}{\partial \theta_2} \right)
+=  \left( \frac{\partial J(\theta)}{\partial a^{(3)}} \right) \left(  \frac{\partial a^{(3)}}{\partial z^{(3)}} \right) \left(  \frac{\partial z^{(3)}}{\partial \theta_2} \right) 
 \]
+
+By similar logic we can find $\frac{\partial J(\theta)}{\partial \theta_1}$.
+\[
+\frac{\partial J(\theta)}{\partial \theta_1}
+ =  \left( \frac{\partial J(\theta)}{\partial a^{(3)}} \right) \left(  \frac{\partial a^{(3)}}{\partial z^{(3)}} \right) \left( \frac{\partial z^{(3)})}{\partial a^{(2)}} \right) \left(  \frac{\partial a^{(2)}}{\partial z^{(2)}} \right) \left(  \frac{\partial z^{(2)}}{\partial \theta_1} \right) 
+\]
+
+ 
+Simplifying $\frac{\partial J(\theta)}{\partial \theta_2}$.
+\[
+\frac{\partial J(\theta)}{\partial \theta_2}
+=  \delta^{(3)}  \left(  \frac{\partial z^{(3)}}{\partial \theta_2} \right)
+=  \delta^{(3)} a^{(2)}
+\]
+
+where \[ \delta^{(3)} = (y - a^{(3)}) f'(a^{(3)})\]
+
+\subsection{A formalized method for implementing backpropagation}
+Here, I'll present a practical method for implementing backpropagation through a network of layers $l=1,2,\cdots,L$.
+\begin{enumerate}
+\item Perform forward propagation.
+\end{enumerate}
+
 
 
 \subsection{Vanishing gradient}

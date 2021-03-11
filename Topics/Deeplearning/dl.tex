@@ -1,0 +1,67 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+
+\title{Deep Learning}
+\author{Jyotirmoy Banerjee}
+\begin{document}
+\maketitle
+
+
+\section{Back propogation}
+
+
+\subsection{Vanishing gradient}
+
+A problem with training networks with many layers (e.g. deep neural networks) is that the gradient diminishes dramatically as it is propagated backward through the network. The error may be so small by the time it reaches layers close to the input of the model that it may have very little effect. As such, this problem is referred to as the ``vanishing gradients'' problem.
+
+Vanishing gradients is a particular problem with recurrent neural networks as the update of the network involves unrolling the network for each input time step, in effect creating a very deep network that requires weight updates.
+
+The vanishing gradients problem may be manifest in a Multilayer Perceptron by a slow rate of improvement of a model during training and perhaps premature convergence, e.g. continued training does not result in any further improvement. Inspecting the changes to the weights during training, we would see more change (i.e. more learning) occurring in the layers closer to the output layer and less change occurring in the layers close to the input layer.
+
+\subsection{Exploding gradient}
+
+In fact, the error gradient can be unstable in deep neural networks and not only vanish, but also explode, where the gradient exponentially increases as it is propagated backward through the network. This is referred to as the ``exploding gradient'' problem.
+
+\subsection{ReLU}
+Changing the activation function from sigmoid to ReLU addresses the vanishing gradient problem.
+The sigmoid function is given as $\sigma(x) = \frac{1}{1 + e^{-x}}$.  Consider the first order derivative of the sigmoid function $\sigma'(x) = \frac{e^{-x}}{(1 + e^{-x})^2} = \sigma(x)(1-\sigma(x))$.
+
+Since  $\sigma(x)$  ranges from $0$ to $1$, its lower and upper asymptotes respectively, then clearly the derivative will be near zero for $\sigma(x) \approx 0$ or $\sigma(x) \approx 1$. The vanishing gradient problem comes about when the error signal passes backwards and starts approaching zero as it propagates backwards especially through neurons near saturation. If the network is deep enough the error signal from the output layer can be completely attenuated on it's way back towards the input layer.
+
+The attenuation comes about because the derivative $\sigma'(x)$ will always be near zero especially for saturating neurons, you do notice that if you use chain rule, which is backpropagation in neural net terms, you will somehow be multiplying this almost zero derivative with the error signal before throwing it backwards at every level or stage. Now keep doing that as you throw the error signal backwards and what you get is an error signal becoming weaker hence vanishing. Even the hyperbolic tangent has this saturating effect and hence the vanishing gradient problem also affects it.
+
+That's why ReLUs are favorable not only because they solve the vanishing gradient problem but also because they result in highly sparse neural nets. Sparsity means efficient and reliable performance. The rectifier is as given below.
+
+\[ f(x) = 
+\begin{cases}
+    0  & \quad \text{for } x < 0\\
+    x  & \quad \text{for } x \geq 0
+  \end{cases}
+\]
+
+Clearly it ranges from 0 to positive infinity thus it is non saturating and the derivative is given by
+
+\[ f'(x) = 
+\begin{cases}
+    0  & \quad \text{for } x < 0\\
+    1  & \quad \text{for } x \geq 0
+  \end{cases}
+\]
+
+
+It's always $1$ hence no attenuation of an error signal propagating backwards. This makes ReLUs favorable for the deeper trainable feature detectors as in CNN, you can have very deep neural nets with ReLUs without the vanishing gradient problem.
+
+Notice that the negative region has a zero derivative. This can be a problem as the neuron is off within this region and cannot learn and gradients cannot be backpropagated through an off neuron. There are remedies to this by adding a leakage factor which results in a non-zero derivative and thus resulting in a modified neuron known as the leaky ReLU.
+
+\end{document}
+

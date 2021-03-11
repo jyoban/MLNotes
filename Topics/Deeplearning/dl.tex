@@ -84,6 +84,9 @@ Here, I'll present a practical method for implementing backpropagation through a
 After we have calculated all of the partial derivatives for the neural network parameters, we can use gradient descent to update the weights.
 \[\theta_l = \theta_l - \eta \cdot \frac{\partial J(\theta)}{\partial \theta_{l}} = \theta_l - \eta \cdot \nabla_{\theta_l} J( \theta)\]
 
+
+It is important that we initialize our weights to random values so that we can break the symmetry in our model. If we had initialized all of our weights to be equal to be the same, every neuron in the next layer forward would be equal to the same linear combination of values.
+
 \subsection{Vanishing gradient}
 
 A problem with training networks with many layers (e.g. deep neural networks) is that the gradient diminishes dramatically as it is propagated backward through the network. The error may be so small by the time it reaches layers close to the input of the model that it may have very little effect. As such, this problem is referred to as the ``vanishing gradients'' problem.
@@ -91,6 +94,7 @@ A problem with training networks with many layers (e.g. deep neural networks) is
 Vanishing gradients is a particular problem with recurrent neural networks as the update of the network involves unrolling the network for each input time step, in effect creating a very deep network that requires weight updates.
 
 The vanishing gradients problem may be manifest in a Multilayer Perceptron by a slow rate of improvement of a model during training and perhaps premature convergence, e.g. continued training does not result in any further improvement. Inspecting the changes to the weights during training, we would see more change (i.e. more learning) occurring in the layers closer to the output layer and less change occurring in the layers close to the input layer.
+By this same logic, the $\delta$ values would also be the same for every neuron in a given layer.
 
 \subsection{Exploding gradient}
 

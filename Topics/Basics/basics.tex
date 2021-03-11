@@ -17,6 +17,27 @@
 \begin{document}
 \maketitle
 
+\section{Math}
+
+\section{Matrix}
+For a square matrix A, an Eigenvector and Eigenvalue make this equation true:
+\[ Av = \lambda v\]
+where $v$ is the eigen vector and $\lambda$ is the eigen value.
+$\text{det}(A -  \lambda I) = 0$ is called the \emph{characteristic equation} of the matrix $A$. Eigenvalues $\lambda$ of $A$ are roots of the characteristic equation. Associated eigenvectors of $A$ are nonzero solutions of the equation $(A - \lambda I)x = 0$.
+
+\subsection{PCA and SVD}
+
+Let the data matrix $X$ be of $n \times p$ size, where $n$ is the number of samples and $p$ is the number of variables. Let us assume that it is centered, i.e.\ column means have been subtracted and are now equal to zero.
+
+Then the $p \times p$ covariance matrix $C$ is given by $C= X^TX/(n-1)$. It is a symmetric matrix and so it can be diagonalized:
+\[C = VLV^T ,\]
+where V is a matrix of eigenvectors (each column is an eigenvector) and L is a diagonal matrix with eigenvalues $\lambda_i$ in the decreasing order on the diagonal. The eigenvectors are called principal axes or principal directions of the data. Projections of the data on the principal axes are called principal components, also known as PC scores; these can be seen as new, transformed, variables. The j-th principal component is given by j-th column of XV. The coordinates of the i-th data point in the new PC space are given by the i-th row of XV.
+
+If we now perform singular value decomposition of X, we obtain a decomposition
+$X=USV^T$,
+where U is a unitary matrix and S is the diagonal matrix of singular values $s_i$. From here one can easily see that
+\[ C=\frac{VSU^TUSV^T}{(n-1)} = V\frac{S^2}{n-1}V^T, \]
+meaning that right singular vectors V are principal directions and that singular values are related to the eigenvalues of covariance matrix via $\lambda_i = s^2_i/(n-1)$. Principal components are given by $XV=USV^TV=US$.
 
 \section{Bias-Variance}
 Suppose that we have a training set consisting of a set of points $x_{1},\dots ,x_{n}$ and real values $y_{i}$ associated with each point $x_{i}$. We assume that there is a function with noise $y=f(x)+\varepsilon$, where the noise, $\varepsilon$, has zero mean and variance $\sigma^{2}$.

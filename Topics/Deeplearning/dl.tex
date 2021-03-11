@@ -21,7 +21,19 @@
 %https://www.jeremyjordan.me/neural-networks-training/
 
 Let's consider a simple simplest neural network: one input neuron, one hidden layer neuron, and one output neuron.
+\begin{itemize}
+\item input neuron: x 
+\item hidden neuron: $z^{(2)} = \theta_1 x, \, a^{(2)} = g(z^{(2)})$
+\item output neuron:  $z^{(3)} = \theta_2 a^{(2)},  \, a^{(3)} = g(z^{(3)})$
+\item cost function: $J(\theta) = \frac{1}{2} (y - a^{(3)})^2$
+\end{itemize}
 
+
+Let's apply the chain rule to solve for $\frac{\partial J(\theta)}{\partial \theta_2}$.
+\[
+\frac{\partial J(\theta)}{\partial \theta_2}
+=  \left( \frac{\partial J(\theta)}{\partial a^{(3)}} \right) \left(  \frac{\partial a^{(3)}}{\partial z} \right) \left(  \frac{\partial z}{\partial \theta_2} \right)
+\]
 
 
 \subsection{Vanishing gradient}

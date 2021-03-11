@@ -81,8 +81,8 @@ Here, I'll present a practical method for implementing backpropagation through a
 \[ \frac{\partial J(\theta)}{\partial \theta_{l}} =  \delta^{(l+1)} a^{(l)} \]
 \item Repeat 4 through 6 until you reach the input layer.
 \end{enumerate}
-
-
+After we have calculated all of the partial derivatives for the neural network parameters, we can use gradient descent to update the weights.
+\[\theta_l = \theta_l - \eta \cdot \frac{\partial J(\theta)}{\partial \theta_{l}} = \theta_l - \eta \cdot \nabla_{\theta_l} J( \theta)\]
 
 \subsection{Vanishing gradient}
 

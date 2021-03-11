@@ -49,12 +49,37 @@ Simplifying $\frac{\partial J(\theta)}{\partial \theta_2}$.
 =  \delta^{(3)} a^{(2)}
 \]
 
-where \[ \delta^{(3)} = (y - a^{(3)}) f'(a^{(3)})\]
+where \[ \delta^{(3)} = (y - a^{(3)}) g'(a^{(3)})\]
+
+Simplifying $\frac{\partial J(\theta)}{\partial \theta_1}$.
+\begin{align}
+\frac{\partial J(\theta)}{\partial \theta_1}
+& =  \delta^{(3)} \left( \frac{\partial z^{(3)})}{\partial a^{(2)}} \right) \left(  \frac{\partial a^{(2)}}{\partial z^{(2)}} \right) \left(  \frac{\partial z^{(2)}}{\partial \theta_1} \right) \nonumber \\
+& =  \delta^{(3)} \theta_2 \left(  \frac{\partial a^{(2)}}{\partial z^{(2)}} \right) \left(  \frac{\partial z^{(2)}}{\partial \theta_1} \right) \nonumber \\
+& =  \delta^{(3)} \theta_2 g'(a^{(2)})  \left(  \frac{\partial z^{(2)}}{\partial \theta_1} \right) \nonumber \\
+& =  \delta^{(2)}  \left(  \frac{\partial z^{(2)}}{\partial \theta_1} \right) \nonumber
+\end{align}
+
+where \[  \delta^{(2)} = \delta^{(3)} \theta_2 g'(a^{(2)}) \]
+
 
 \subsection{A formalized method for implementing backpropagation}
 Here, I'll present a practical method for implementing backpropagation through a network of layers $l=1,2,\cdots,L$.
 \begin{enumerate}
 \item Perform forward propagation.
+\item Compute the $\delta$ term for the output layer.
+\[ \delta^{(L)} = (y - a^{(L)}) f'(a^{(L)}) \]
+\item Compute the partial derivatives of the cost function with respect to all of the parameters that feed into the output layer, $\theta_{L-1}$.
+\[ \frac{\partial J(\theta)}{\partial \theta_{L-1}} =  \delta^{(L)} a^{(L-1)} \]
+\item Go back one layer.
+\[ l = l -1\]
+
+\item Compute the $\delta$ term for the current hidden layer.
+\[  \delta^{(l)} = \delta^{(l+1)} \theta_l g'(a^{(l)}) \]
+
+\item Compute the partial derivatives of the cost function with respect to all of the parameters that feed into the current layer.
+\[ \frac{\partial J(\theta)}{\partial \theta_{l}} =  \delta^{(l+1)} a^{(l)} \]
+\item Repeat 4 through 6 until you reach the input layer.
 \end{enumerate}
 
 

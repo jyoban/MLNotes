@@ -84,31 +84,69 @@ Similarly, if we apply a similar method to finding $\hat{\sigma}^{2}_{k}$ and $\
 \hat{\pi}_{k} = \frac{N_k}{n}
 \]
 
-\section{Expectation Maximization}
-The EM algorithm attempts to find maximum likelihood estimates for models with latent variables. In this section, we describe a more abstract view of EM which can be extended to other latent variable models.
+%\section{Expectation Maximization}
+%The EM algorithm attempts to find maximum likelihood estimates for models with latent variables. In this section, we describe a more abstract view of EM which can be extended to other latent variable models.
 
-Let $X$ be the entire set of observed variables and $Z$ the entire set of latent variables. The log-likelihood is therefore:
+%Let $X$ be the entire set of observed variables and $Z$ the entire set of latent variables. The log-likelihood is therefore:
 
-\[ 
-\log {(P(X|\Theta))} = \log \left( {\sum_Z P(X, Z |\Theta)} \right)
-\]
+%\[ 
+%\log {(P(X|\Theta))} = \log \left( {\sum_Z P(X, Z |\Theta)} \right)
+%\]
 
-The existence of the sum inside the logarithm prevents us from applying the log to the densities which results in a complicated expression for the MLE. Now suppose that we observed both $X$ and $Z$. We call $\{X,Z\}$ the complete data set, and we say $X$ is incomplete. As we noted previously, if we knew $Z$, the maximization would be easy.
+%The existence of the sum inside the logarithm prevents us from applying the log to the densities which results in a complicated expression for the MLE. Now suppose that we observed both $X$ and $Z$. We call $\{X,Z\}$ the complete data set, and we say $X$ is incomplete. As we noted previously, if we knew $Z$, the maximization would be easy.
 
-We typically don't know $Z$, but the information we do have about $Z$ is contained in the posterior $P(Z|X,\theta)$. Since we don't know the complete log-likelihood, we consider its expectation under the posterior distribution of the latent variables. This corresponds to the E-step above. In the M-step, we maximize this expectation to find a new estimate for the parameters.
+%We typically don't know $Z$, but the information we do have about $Z$ is contained in the posterior $P(Z|X,\theta)$. Since we don't know the complete log-likelihood, we consider its expectation under the posterior distribution of the latent variables. This corresponds to the E-step above. In the M-step, we maximize this expectation to find a new estimate for the parameters.
 
-In the E-step, we use the current value of the parameters $\theta^0$ to find the posterior distribution of the latent variables given by $P(Z|X,\theta^0)$. We then use this to find the expectation of the complete data log-likelihood, with respect to this posterior, evaluated at an arbitrary $\theta$. This expectation is denoted $Q(\theta,\theta^0)$ and it equals:
+%In the E-step, we use the current value of the parameters $\theta^0$ to find the posterior distribution of the latent variables given by $P(Z|X,\theta^0)$. We then use this to find the expectation of the complete data log-likelihood, with respect to this posterior, evaluated at an arbitrary $\theta$. This expectation is denoted $Q(\theta,\theta^0)$ and it equals:
 
-\[ 
-Q(\theta, \theta^0) = E_{Z | X, \theta^0} [log(P(X,Z|\theta))] = \sum_Z P(Z | X, \theta^0) \log(P(X,Z|\theta))
-\]
+%\[ 
+%Q(\theta, \theta^0) = E_{Z | X, \theta^0} [log(P(X,Z|\theta))] = \sum_Z P(Z | X, \theta^0) \log(P(X,Z|\theta))
+%\]
 
-In the M-step, we determine the new parameter $\hat{\theta}$ by maximizing Q:
-\[
-\hat{\theta} =  \argmax_{\theta} Q(\theta, \theta^0) 
-\]
+%In the M-step, we determine the new parameter $\hat{\theta}$ by maximizing Q:
+%\[
+%\hat{\theta} =  \argmax_{\theta} Q(\theta, \theta^0) 
+%\]
 
 % https://stephens999.github.io/fiveMinuteStats/intro_to_em.html
+
+
+\section{Expectation Maximization}
+
+Statistical inference involves finding the right model and parameters that represent the distribution of observations well. Let $\mathbf{x}$ be the observations and $\theta$ be the unknown parameters of a ML model. In maximum likelihood estimation, we try to find the $\theta_\mathrm{ML}$
+that maximizes the probability of the observations using the ML model with the parameters:
+\begin{equation}
+\hat{\theta}_\mathrm{ML} = \argmax_\theta \, p(\mathbf{x}, \theta)
+\end{equation}
+Typically, the problem requires few assumptions to solve the above optimization efficiently. One trick is to introduce latent variables $\mathbf{z}$ that break down the problem into smaller subproblems. For instance, in the Gaussian Mixture Model, we can introduce the cluster membership assignment as random variables $z_i$ for each datum $x_i$, which greatly simplifies the model
+$(p(x_i|z_i=k) \sim \mathcal{N}(\mu_k,\sigma_k))$.
+\begin{equation}
+p(\mathbf{x};\theta)=\int p(\mathbf{x},\mathbf{z};\theta) d{z}
+\end{equation}
+However, the above integration is, in many cases, intractable and can be either approximated using stochastic sampling (Monte Carlo methods) or we can simply bypass the computation using few assumptions. The second method is called variational inference, coined after the calculus of variations, which we will go over.
+
+\subsection{Evidence Lower Bound (ELBO)}
+
+Let $q(z)$ be a probability distribution on z. Then,
+\begin{align}
+\ln p(x;\theta) &= \int q(z) \ln p(x; \theta) dz \nonumber \\
+&= \int q(z) \ln \left( \frac{p(x; \theta) p(z|x; \theta)}{p(z|x; \theta)} \right) dz \nonumber \\
+&= \int q(z) \ln \left( \frac{p(x,z; \theta)}{p(z|x; \theta)} \right) dz \nonumber \\
+&= \int q(z) \ln \left( \frac{p(x,z; \theta)q(z)}{p(z|x; \theta)q(z)} \right) dz \nonumber \\
+&= \int q(z) \ln \left( \frac{p(x,z; \theta)}{q(z)} \right) dz - \int q(z) \ln \left( \frac{p(z|x; \theta)}{q(z)} \right) dz \nonumber \\
+&= F(q,\theta) + KL(q||p) \nonumber 
+\end{align}
+
+where $F(q,\theta)$ known as the evidence lower bound or ELBO, or the negative of the variational free energy. $KL$ is the Kullback-Leibler divergence. Since the KL-divergence is non-negative,
+\[ \ln p(x;\theta) \geq F(q,\theta) \]
+
+The ELBO provides a lower bound for the marginal likelihood. Instead of maximizing the marginal likelihood directly, the Expectation Maximization (EM) and variational inference maximize the variational lower bound.
+
+\begin{align}
+F(q,\theta) &= \int q(z) \ln \left( \frac{p(x,z; \theta)}{q(z)} \right) dz \nonumber \\
+&= \int q(z) \ln p(x,z; \theta)  dz - \int q(z) \ln q(z) dz  \nonumber 
+\end{align}
+
 
 \end{document}
 

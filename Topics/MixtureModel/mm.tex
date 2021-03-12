@@ -155,7 +155,7 @@ The second term is entropy. It is a constant with respect to $\theta$ and we do 
 The EM algorithm can be succinctly summarized as $\argmax_{\theta} Q(\theta, \theta_\text{OLD})$
 \begin{itemize}
 \item E-step: compute $p(z|x;\theta_\text{OLD})$
-\item M-step: $\argmax_{\theta} \int p(z|x;\theta_\text{OLD}) \ln p(x,z; \theta)  dz$
+\item M-step: evaluate $\argmax_{\theta} \int p(z|x;\theta_\text{OLD}) \ln p(x,z; \theta)  dz$
 \end{itemize}
 
 For example, the EM for the Gaussian Mixture Model consists of an expectation step where you compute the soft assignment of each datum to K clusters, and a maximization step which computes the parameters of each cluster using the assignment. However, for complex models, we cannot use the EM algorithm.

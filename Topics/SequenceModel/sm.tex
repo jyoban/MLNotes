@@ -76,6 +76,18 @@ approach has more freedom to fit the data, because it does not require that $\th
 \section{Linear-chain CRFs}
 To motivate our introduction of linear-chain CRFs, we begin by considering the conditional distribution $p(y|x)$ that follows from the joint distribution $p(y,x)$ of an HMM. The key point is that this conditional distribution is in fact a CRF with a particular choice of feature functions.
 
+Let $Y,X$ be random vectors, $\theta = \{\theta_k\} \in \mathcal{R}^K$ be a parameter vector, and $\mathcal{F} = \{f_k(y,y',x_t)\}_{K}^{k=1}$ be a set of real-valued feature functions.
+
+Then we can write HMM as:
+\[ P(y,x) = \frac{1}{Z} \prod_{t=1}^{T} \exp \Bigg\{ \sum_{t=1}^{K} \theta_k f_k (y_t,y_{t-1},x_t) \Bigg\} \]
+
+
+Then a linear-chain conditional random field is a distribution $p(y|x)$ that takes the form:
+\begin{align}
+ P(y|x) &= \frac{p(y,x)}{\sum_{y'} p(y',x)} \nonumber \\
+  &= \frac{\prod_{t=1}^{T} \exp \Bigg\{ \sum_{t=1}^{K} \theta_k f_k (y_t,y_{t-1},x_t) \Bigg\}}{\sum_{y'} \prod_{t=1}^{T} \exp \Bigg\{ \sum_{t=1}^{K} \theta_k f_k ({y'}_t,{y'}_{t-1},x_t) \Bigg\}}  \nonumber \\
+ &= \frac{1}{Z(x)} \prod_{t=1}^{T} \exp \Bigg\{ \sum_{t=1}^{K} \theta_k f_k (y_t,y_{t-1},x_t) \Bigg\} \nonumber
+ \end{align}
 
 
 \end{document}

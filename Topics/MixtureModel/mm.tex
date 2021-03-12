@@ -142,11 +142,23 @@ where $F(q,\theta)$ known as the evidence lower bound or ELBO, or the negative o
 
 The ELBO provides a lower bound for the marginal likelihood. Instead of maximizing the marginal likelihood directly, the Expectation Maximization (EM) and variational inference maximize the variational lower bound.
 
+Let's assume that we can find $p(z|x; \theta_\text{OLD})$ analytically (for the Gaussian Mixture Model, this is just a softmax). Then, we can simply substitute $q(z)=p(z|x;\theta_\text{OLD})$. The ELBO becomes
+
 \begin{align}
 F(q,\theta) &= \int q(z) \ln \left( \frac{p(x,z; \theta)}{q(z)} \right) dz \nonumber \\
-&= \int q(z) \ln p(x,z; \theta)  dz - \int q(z) \ln q(z) dz  \nonumber 
+&= \int q(z) \ln p(x,z; \theta)  dz - \int q(z) \ln q(z) dz  \nonumber \\
+&= \int p(z|x;\theta_\text{OLD}) \ln p(x,z; \theta)  dz - \int p(z|x;\theta_\text{OLD}) \ln p(z|x;\theta_\text{OLD}) dz  \nonumber  \\
+&= Q(\theta, \theta_\text{OLD}) + H(q)
 \end{align}
+The second term is entropy. It is a constant with respect to $\theta$ and we do not take the term into account while maximizing the ELBO.
 
+The EM algorithm can be succinctly summarized as $\argmax_{\theta} Q(\theta, \theta_\text{OLD})$
+\begin{itemize}
+\item E-step: compute $p(z|x;\theta_\text{OLD})$
+\item M-step: $\argmax_{\theta} \int p(z|x;\theta_\text{OLD}) \ln p(x,z; \theta)  dz$
+\end{itemize}
+
+For example, the EM for the Gaussian Mixture Model consists of an expectation step where you compute the soft assignment of each datum to K clusters, and a maximization step which computes the parameters of each cluster using the assignment. However, for complex models, we cannot use the EM algorithm.
 
 \end{document}
 

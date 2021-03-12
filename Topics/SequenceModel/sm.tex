@@ -53,6 +53,26 @@ The main conceptual difference between discriminative and generative models is t
 
 By modeling the conditional distribution directly, we can remain agnostic about the form of $p(x)$. Discriminative models, such as CRFs, make conditional independence assumptions among $y$, and assumptions about how the y can depend on x, but do not make conditonal independence assumptions among x.
 
+
+Suppose we have a generative model $p_g$ with parameters $\theta$. By definition, this takes
+the form
+
+\[p_g(y, x; \theta) = p_g(y; \theta)p_g(x|y; \theta). \]
+
+Now, compare this generative model to a discriminative model over
+the same family of joint distributions. To do this, we define a prior
+$p(x)$ over inputs, such that $p(x)$ could have arisen from $p_g$ with some
+parameter setting. That is, $p(x) = p_c(x; \theta') = \sum_y p_g(y, x|\theta')$. 
+We combine this with a conditional distribution $p_c(y|x; \theta)$ that could also have
+arisen from $p_g$, that is, $p_c(y|x; \theta) = p_g(y, x; \theta)/p_g(x; \theta)$. Then the resulting distribution is
+
+\[p_c(y, x) = p_c(x; \theta')p_c(y|x; \theta).\]
+
+By comparing above equations, it can be seen that the conditional
+approach has more freedom to fit the data, because it does not require that $\theta = \theta'$. 
+
+
+
 \section{Linear-chain CRFs}
 To motivate our introduction of linear-chain CRFs, we begin by considering the conditional distribution $p(y|x)$ that follows from the joint distribution $p(y,x)$ of an HMM. The key point is that this conditional distribution is in fact a CRF with a particular choice of feature functions.
 

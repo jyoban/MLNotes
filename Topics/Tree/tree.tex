@@ -334,6 +334,25 @@ By this method, we are slowly inching in the right direction towards better pred
 
 Initially, a tree with a single node is built which predicts the aggregated value of $Y$ in case of regression or log(odds) of $Y$ for classification problems after which trees with greater depth are grown on previous classifier's residuals. Learning rates are given as constant for every tree so that the model takes small steps in the right direction to capture the variance and train the classifier on it. Unlike Adaboost, here all the trees are given equal weights.
 
+\begin{algorithm}[h]
+\caption{Gradient tree boosting algorithm}
+\begin{enumerate}
+\item Initialize $f_0(x) = \argmin_\gamma \sum_{i=1}^{N} L(y_i, \gamma)$
+\item For $m=1$ to $M$:
+	\begin{enumerate}
+		\item For $i = 1,2,\cdots,N$ compute
+		\[ r_{im} = - \left[ \frac{\partial L(y_i, f(x_i))}{\partial f(x_i)} \right]_{f=f_{m-1}}\]
+		\item Fit a regression tree to the targets $r_{im}$ giving terminal regions $R_{jm}$, $j = 1,2,\cdots,J_m$.
+		\item For $j = 1,2,...,J_m$ compute
+		\[ \gamma_{jm} = \argmin_{\gamma} \sum_{x_i \in R_{jm}}  L(y_i, f_{m-1}(x_i) + \gamma) \]
+		\item Update 
+		\[ f_m(x) = f_{m-1}(x) + \sum_{j-1}^{J_m} \gamma_{jm} I(x \in R_{jm})\]
+	\end{enumerate}
+\item Output $\hat{f}(x) = f_M(x)$
+\end{enumerate}
+\end{algorithm}
+
+
 
 \begin{table}[hbt]
 \begin{tabular}{p{0.05\linewidth} | p{0.4\linewidth} | p{0.4\linewidth}}

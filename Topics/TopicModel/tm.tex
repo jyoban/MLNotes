@@ -165,6 +165,15 @@ Above is what is known as a plate diagram of an LDA model where:
 \item $w$ is the specific word.
 \end{itemize}
 
+The objective function is to estimate $P(\theta, z, \phi | D, \alpha, \beta)$
+
+\section{Gibbs sampling}
+Suppose $\theta_1, \theta_2 \sim p(\theta_1, \theta_2)$
+\begin{enumerate}
+\item $\theta_{1}^{j} \sim p(\theta_1 | \theta_{2}^{(j-1)})$
+\item $\theta_{2}^{j} \sim p(\theta_2 | \theta_{1}^{j})$
+\end{enumerate}
+
 
 \end{document}
 
